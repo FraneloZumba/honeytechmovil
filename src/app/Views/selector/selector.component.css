@@ -1,0 +1,390 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: "Montserrat", serif;
+}
+
+h2 {
+    color: #333;
+}
+
+/* Animación de fade-slide */
+@keyframes fade-slide {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.fade-slide {
+    animation: fade-slide 0.5s ease-out forwards;
+}
+
+
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    /* Asegúrate de que el componente no permita scroll */
+}
+
+.mobile-screen {
+    width: 375px;
+    height: 667px;
+    /* Tamaño fijo para simular una pantalla móvil */
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    /* Impide scroll dentro del contenedor */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.content {
+    flex: 1;
+    /* Asegura que el contenido ocupe todo el espacio disponible */
+    padding: 20px;
+    text-align: center;
+    overflow: hidden;
+    /* Previene scroll en el contenido */
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    /* Asegura que el contenido se ajuste al contenedor */
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.bottom-navbar {
+    height: 65px;
+    /* Aumentamos la altura del navbar */
+    background-color: #ffd000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    /* Añadimos un poco de padding vertical */
+}
+
+.nav-item {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: color 0.3s;
+    gap: 5px;
+    /* Espaciado adicional entre el icono y el texto */
+}
+
+.nav-item i {
+    font-size: 26px;
+    /* Ajustamos el tamaño del ícono si es necesario */
+    margin-bottom: 5px;
+}
+
+.nav-item span {
+    transform: translateY(-5px);
+    /* Ajusta este valor según necesites */
+}
+
+.nav-item.active span {
+    font-size: 16px;
+    color: #333;
+}
+
+.nav-item.active i {
+    color: #333;
+}
+
+/* Animación de bote continuo */
+@keyframes bounce-continuous {
+    0% {
+        transform: translateY(0);
+        /* Posición original */
+    }
+
+    50% {
+        transform: translateY(-5px);
+        /* Sube un poco */
+    }
+
+    100% {
+        transform: translateY(0);
+        /* Vuelve a su posición original */
+    }
+}
+
+.nav-item.active i {
+    animation: bounce-continuous 0.6s ease-in-out infinite;
+    /* Se repite infinitamente */
+}
+
+/* Sección del chat con imagen de fondo */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+    /* Asegura que los mensajes se alineen al fondo */
+    padding: 10px;
+    position: relative;
+    /* Necesario para colocar el overlay */
+    background-image: url('/logo-png.png');
+    /* Ruta de la imagen de fondo */
+    background-size: 100%;
+    /* Ajustamos el tamaño de la imagen al 100% */
+    background-position: center;
+    /* Centra la imagen */
+    background-repeat: no-repeat;
+    /* La imagen no se repite */
+    border-radius: 15px;
+    overflow: hidden;
+    /* Evita que la imagen se desborde */
+}
+
+/* Overlay blanco con fade */
+.chat-container::before {
+    content: '';
+    /* Genera un pseudo-elemento */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.452);
+    /* Blanco semi-transparente */
+    pointer-events: none;
+    /* Asegura que no interfiera con los clics */
+}
+
+/* Input y botón de la sección de chat */
+.chat-input {
+    display: flex;
+    width: 100%;
+    max-width: 320px;
+    padding-top: 10px;
+    position: relative;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    margin-right: 10px;
+    background-color: rgba(255, 255, 255, 0.267);
+    /* Fondo semi-transparente para mejorar la visibilidad */
+}
+
+.chat-input .send-btn {
+    background-color: #ffd000;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Si es necesario, se puede agregar un borde o sombra a los elementos para mayor claridad */
+.chat-input input:focus,
+.chat-input .send-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor de tarjetas */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /* Asegura que el contenido no esté centrado */
+    height: 100%;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.card-container {
+    display: flex;
+    gap: 20px;
+    /* Espacio entre las tarjetas */
+    justify-content: center;
+    /* Alinea las tarjetas al principio */
+    align-items: flex-start;
+    /* Alinea las tarjetas arriba */
+    margin-top: 20px;
+}
+
+.card {
+    cursor: pointer;
+    width: 150px;
+    height: 175px;
+    background-color: #fff;
+    border: 5px solid #ffd000;
+    /* Borde amarillo */
+    border-radius: 15px;
+    /* Bordes redondeados */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Alinea el contenido hacia arriba */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    flex-direction: column;
+    /* Mantiene el texto debajo de la tarjeta */
+    padding-top: 15px;
+    /* Añade espacio en la parte superior de las tarjetas */
+}
+
+.card p {
+    margin-top: 10px;
+    /* Añadir espacio arriba del texto */
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    /* Centra el texto debajo de cada tarjeta */
+}
+
+
+/* Tarjeta con espacio para imagen */
+.image-card .image-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ccc;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+    overflow: hidden;
+    /* Oculta cualquier parte de la imagen que sobresalga */
+}
+
+/* Estilo de la imagen para que se adapte al tamaño */
+.image-card .image-placeholder img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    /* Ajusta la imagen al contenedor, manteniendo la relación de aspecto */
+}
+
+/* Tarjeta con el símbolo '+' */
+.plus-card .plus-sign {
+    font-size: 50px;
+    color: #ffd000;
+    font-weight: bold;
+}
+
+/* Sección de usuario */
+.user-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.user-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.user-header i {
+  cursor: pointer;
+  font-size: 26px;
+  color: #333;
+}
+
+.profile-pic-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #ddd; /* Color de fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-info h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center; /* Centra el texto del nombre */
+}
+
+.user-info p {
+  font-size: 16px;
+  color: #555;
+}
+
+.logout-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.logout-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+  
+  

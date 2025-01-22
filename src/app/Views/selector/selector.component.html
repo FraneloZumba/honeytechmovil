@@ -1,0 +1,70 @@
+<head>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+</head>
+<div class="mobile-screen">
+    <!-- Aqui va todo el contenido de cada una de las secciones -->
+    <div class="content">
+        <!-- Contenido de Usuario -->
+        <main *ngIf="activeTab === 'usuario'" class="main-content fade-slide">
+            <div class="user-header">
+                <i class="uil uil-setting"></i> <!-- Ícono en la esquina superior izquierda -->
+              </div>
+              <div class="profile-pic-container">
+                <div class="profile-pic"></div> <!-- Espacio para la imagen de perfil -->
+              </div>
+              <div class="user-info">
+                <h2>Usuario</h2>
+                <p>Nombre: HoneyTech</p>
+                <p>Correo: honneytech&#64;gmail.com</p>
+                <p>Teléfono: 0989477669</p>
+                <p>Dirección: Calle 1, Calle 2</p>
+              </div>
+        </main>
+        <!-- Contenido de Cajas -->
+        <main *ngIf="activeTab === 'cajas'" class="main-content fade-slide">
+            <h2>Cajas</h2>
+            <div class="card-container">
+                <!-- Tarjeta con espacio para imagen -->
+                <div class="card image-card">
+                    <div class="image-placeholder">
+                        <img src="https://cdn-icons-png.flaticon.com/512/5532/5532157.png" alt="">
+                    </div>
+                    <p>Caja 1</p> <!-- Texto debajo de la tarjeta -->
+                </div>
+
+                <!-- Tarjeta con el '+' -->
+                <div class="card plus-card">
+                    <span class="plus-sign">+</span>
+                    <p>Añadir caja</p> <!-- Texto debajo de la tarjeta -->
+                </div>
+            </div>
+        </main>
+        <!-- Contenido de ChatBot -->
+        <main *ngIf="activeTab === 'chatbot'" class="main-content fade-slide">
+            <h2>ChatBot</h2>
+            <div class="chat-container">
+                <div class="chat-input">
+                    <input type="text" placeholder="Escribe tu mensaje..." />
+                    <button class="send-btn">Enviar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- Aqui el bottom navbar y las clases -->
+    <nav class="bottom-navbar">
+        <a href="#" class="nav-item" [class.active]="activeTab === 'usuario'" (click)="setActiveTab('usuario')">
+            <i class="uil uil-user"></i>
+            <span>Usuario</span>
+        </a>
+        <a href="#" class="nav-item" [class.active]="activeTab === 'cajas'" (click)="setActiveTab('cajas')">
+            <i class="uil uil-archive"></i>
+            <span>Cajas</span>
+        </a>
+        <a href="#" class="nav-item" [class.active]="activeTab === 'chatbot'" (click)="setActiveTab('chatbot')">
+            <i class="uil uil-robot"></i>
+            <span>ChatBot</span>
+        </a>
+    </nav>
+</div>

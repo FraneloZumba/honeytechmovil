@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: "Montserrat", serif;
+}
+
+h2 {
+    color: #333;
+}
+
+:host {
+    background-color: #1b1b1b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    /* Asegúrate de que el componente no permita scroll */
+}
+
+.mobile-screen {
+    width: 375px;
+    height: 667px;
+    /* Tamaño fijo para simular una pantalla móvil */
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    /* Impide scroll dentro del contenedor */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Animación de slide-up con fade */
+@keyframes slide-up-fade {
+    0% {
+        transform: translateY(30px); /* Empieza desplazado hacia abajo */
+        opacity: 0; /* Invisible al inicio */
+    }
+    100% {
+        transform: translateY(0); /* Posición original */
+        opacity: 1; /* Completamente visible */
+    }
+}
+
+.content {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    overflow: hidden;
+    animation: slide-up-fade 0.5s ease-out; /* Aplica la animación al contenedor */
+}
+
+.mini_container, .back_button, h2 {
+    animation: slide-up-fade 0.5s ease-out; /* Aplica la animación a cada elemento */
+    animation-delay: 0.2s; /* Retardo opcional para hacer que todos inicien en sincronía */
+    animation-fill-mode: forwards; /* Asegura que mantengan su estado final */
+    opacity: 0; /* Comienza invisible */
+}
+
+.mini_container{
+    background-image: url(https://media.istockphoto.com/id/1065475532/es/vector/transparente-en-forma-de-panal.jpg?s=612x612&w=0&k=20&c=F0-E1A41k2CZoShtlx2hfV6AtNeZRZcePoH4BEboZZU=);
+    border-radius: 15px;
+    color: rgb(0, 0, 0);
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.mini_container p {
+    font-size: 25px;
+    margin-top: 5px; /* Reduce la distancia entre el ícono y el texto */
+}
+
+.mini_container i{
+    font-size: 45px;
+}
+
+.back_button{
+    background-color: black;
+    color: white;
+    margin-right: 175px;
+    height: 40px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.back_button p{
+    font-size: 20px;
+    padding-top: 7px;
+}
