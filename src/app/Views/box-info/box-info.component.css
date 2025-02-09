@@ -36,12 +36,17 @@ h2 {
 /* Animación de slide-up con fade */
 @keyframes slide-up-fade {
     0% {
-        transform: translateY(30px); /* Empieza desplazado hacia abajo */
-        opacity: 0; /* Invisible al inicio */
+        transform: translateY(30px);
+        /* Empieza desplazado hacia abajo */
+        opacity: 0;
+        /* Invisible al inicio */
     }
+
     100% {
-        transform: translateY(0); /* Posición original */
-        opacity: 1; /* Completamente visible */
+        transform: translateY(0);
+        /* Posición original */
+        opacity: 1;
+        /* Completamente visible */
     }
 }
 
@@ -50,45 +55,53 @@ h2 {
     padding: 10px;
     text-align: center;
     overflow: hidden;
-    animation: slide-up-fade 0.5s ease-out; /* Aplica la animación al contenedor */
+    animation: slide-up-fade 0.5s ease-out;
+    /* Aplica la animación al contenedor */
 }
 
-.mini_container, .back_button, h2 {
-    animation: slide-up-fade 0.5s ease-out; /* Aplica la animación a cada elemento */
-    animation-delay: 0.2s; /* Retardo opcional para hacer que todos inicien en sincronía */
-    animation-fill-mode: forwards; /* Asegura que mantengan su estado final */
-    opacity: 0; /* Comienza invisible */
+.mini_container,
+.back_button,
+h2 {
+    animation: slide-up-fade 0.5s ease-out;
+    /* Aplica la animación a cada elemento */
+    animation-delay: 0.2s;
+    /* Retardo opcional para hacer que todos inicien en sincronía */
+    animation-fill-mode: forwards;
+    /* Asegura que mantengan su estado final */
+    opacity: 0;
+    /* Comienza invisible */
 }
 
-.mini_container{
-    background-image: url(https://media.istockphoto.com/id/1065475532/es/vector/transparente-en-forma-de-panal.jpg?s=612x612&w=0&k=20&c=F0-E1A41k2CZoShtlx2hfV6AtNeZRZcePoH4BEboZZU=);
+.mini_container {
+    background-image: url("https://w7.pngwing.com/pngs/758/386/png-transparent-simple-white-honeycomb-pattern-background-white-polygon-honeycomb.png");
+    background-size: cover;
     border-radius: 15px;
-    color: rgb(0, 0, 0);
+    color: rgb(153, 153, 153);
     font-size: 25px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.712);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.445);
 }
 
 .mini_container p {
     font-size: 25px;
-    margin-top: 5px; /* Reduce la distancia entre el ícono y el texto */
+    margin-top: 5px;
+    /* Reduce la distancia entre el ícono y el texto */
 }
 
-.mini_container i{
+.mini_container i {
     font-size: 45px;
 }
 
-.back_button{
-    background-color: rgb(34, 34, 34);
-    color: white;
-    margin-right: 175px;
-    height: 40px;
+.back_button {
+    background-color: transparent;
+    color: rgb(184, 184, 184);
+    margin-right: 275px;
+    height: 65px;
     border-radius: 15px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.712);
 }
 
-.back_button p{
-    font-size: 20px;
+.back_button p {
+    font-size: 45px;
     padding-top: 7px;
 }

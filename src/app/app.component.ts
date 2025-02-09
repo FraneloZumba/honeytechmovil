@@ -9,10 +9,14 @@ import { ChangePasswordComponent } from './Views/change-password/change-password
 import { SuscriptionsComponent } from './Views/suscriptions/suscriptions.component';
 import { PremiumSusInterfaceComponent } from './Views/premium-sus-interface/premium-sus-interface.component';
 import { FreeSusInterfaceComponent } from './Views/free-sus-interface/free-sus-interface.component';
+import { TempInterfaceComponent } from './Views/temp-interface/temp-interface.component';
+import { HumidityInterfaceComponent } from './Views/humidity-interface/humidity-interface.component';
+import { WeightInterfaceComponent } from './Views/weight-interface/weight-interface.component';
+import { CamInterfaceComponent } from './Views/cam-interface/cam-interface.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PremiumSusInterfaceComponent, FreeSusInterfaceComponent, SuscriptionsComponent, ChangePasswordComponent, ConfigComponent, SelectorComponent, RegisterComponent, LoginComponent, BoxInfoComponent],
+  imports: [RouterOutlet, HumidityInterfaceComponent, WeightInterfaceComponent, CamInterfaceComponent, TempInterfaceComponent, PremiumSusInterfaceComponent, FreeSusInterfaceComponent, SuscriptionsComponent, ChangePasswordComponent, ConfigComponent, SelectorComponent, RegisterComponent, LoginComponent, BoxInfoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

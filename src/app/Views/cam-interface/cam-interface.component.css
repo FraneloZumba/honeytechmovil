@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: "Montserrat", serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h2 {
+    color: #333333; /* Gris oscuro para el título */
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+:host {
+    background-color: #000000; /* Fondo blanco */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.mobile-screen {
+    width: 375px;
+    height: 667px;
+    background: #F4F4F4; /* Gris muy claro para el fondo */
+    border-radius: 30px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    position: relative;
+    overflow-y: auto; /* Permitir scroll si el contenido es más grande */
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.info_containers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sections {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+}
+
+.section {
+    background: #FFFFFF; /* Fondo blanco para las secciones */
+    border: solid 2px rgb(255, 220, 65);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    height: 325px;
+}
+
+.section:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-weight: 700;
+    font-size: 22px;
+    color: #333333; /* Gris oscuro para los títulos */
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.mini_container {
+    width: 100%;
+    height: 150px;
+    background-color: #E0E0E0; /* Gris muy suave para las gráficas */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+    height: 225px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.mini_container i{
+    font-size: 55px;
+    color: #333333;
+}
+
+.mini_container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.back_button {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.back_button i {
+    font-size: 36px;
+    color: #333333; /* Gris oscuro para el ícono de retroceso */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back_button i:hover {
+    color: #000000; /* Negro al hacer hover para resaltar el ícono */
+    transform: scale(1.1);
+}
