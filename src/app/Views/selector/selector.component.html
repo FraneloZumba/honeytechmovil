@@ -54,17 +54,17 @@
 
     <!-- Aqui el bottom navbar y las clases -->
     <nav class="bottom-navbar">
-        <a href="#" class="nav-item" [class.active]="activeTab === 'usuario'" (click)="setActiveTab('usuario')">
+        <button class="nav-item" [class.active]="activeTab === 'usuario'" (click)="setActiveTab('usuario')">
             <i class="uil uil-user"></i>
             <span>Usuario</span>
-        </a>
-        <a href="#" class="nav-item" [class.active]="activeTab === 'cajas'" (click)="setActiveTab('cajas')">
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'cajas'" (click)="setActiveTab('cajas')">
             <i class="uil uil-archive"></i>
             <span>Cajas</span>
-        </a>
-        <a href="#" class="nav-item" [class.active]="activeTab === 'chatbot'" (click)="setActiveTab('chatbot')">
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'chatbot'" (click)="setActiveTab('chatbot')">
             <i class="uil uil-robot"></i>
             <span>ChatBot</span>
-        </a>
-    </nav>
+        </button>
+    </nav>    
 </div>

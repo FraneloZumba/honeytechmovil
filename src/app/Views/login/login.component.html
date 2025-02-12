@@ -2,31 +2,38 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 </head>
 <div class="mobile-screen">
-    <div class="container">
+    <div class="container" *ngIf="isLoaded; else loading">
         <div class="container-form">
-            <form class="sign-in">
-                <h2>iniciar sesión</h2>
+            <form class="sign-in" (ngSubmit)="login()">
+                <h2>Iniciar Sesión en HoneyTech</h2>
                 <div class="social-networks">
-                    <i class="uil uil-twitter"></i>
                     <i class="uil uil-instagram"></i>
                     <i class="uil uil-youtube"></i>
                     <i class="uil uil-whatsapp"></i>
                 </div>
-                <span>Use su correo y contraseña</span>
                 <div class="container-input">
                     <i class="uil uil-envelope"></i>
-                    <input type="text" placeholder="Email">
+                    <input type="text" placeholder="Email" [(ngModel)]="email" name="email" required>
                 </div>
                 <div class="container-input">
                     <i class="uil uil-lock"></i>
-                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
                 </div>
                 <a href="#">¿Olvidaste tu contraseña?</a>
                 <div class="container-btn">
-                    <button class="button">INICIAR SESIÓN</button>
-                    <button class="button">REGISTRARSE</button>
+                    <button class="button" type="submit">INICIAR SESIÓN</button>
                 </div>
+                <div class="container-btn">
+                    <button class="button" type="button" (click)="goToRegister()">IR A REGISTRARSE</button>
+                </div>
+                <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
             </form>
         </div>
     </div>
+
+    <ng-template #loading>
+        <div class="loading-container">
+            <p>Cargando...</p>
+        </div>
+    </ng-template>
 </div>

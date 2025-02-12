@@ -72,13 +72,11 @@ h2 {
 
 .bottom-navbar {
     height: 65px;
-    /* Aumentamos la altura del navbar */
     background-color: #ffd000;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 10px 0;
-    /* Añadimos un poco de padding vertical */
 }
 
 .nav-item {
