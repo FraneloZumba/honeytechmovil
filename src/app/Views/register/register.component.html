@@ -39,6 +39,9 @@
                 <div class="container-btn">
                     <button class="button" type="button" routerLink="/login">IR A INICIAR SESIÓN</button>
                 </div>
+                <div class="container-btn">
+                    <button class="button" type="button" (click)="loginWithGoogle()">Registrarse con Google</button>
+                </div>
                 <p *ngIf="registrationSuccess" class="success-message">¡Ahora debe iniciar sesión!</p>
             </form>
         </div>

@@ -1,0 +1,30 @@
+<head>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+</head>
+<div class="mobile-screen">
+    <div class="container" *ngIf="isLoaded; else loading">
+        <div class="container-form">
+            <form class="add-box" (ngSubmit)="addBox()">
+                <h2>Añadir Caja</h2>
+                <div class="container-input">
+                    <i class="uil uil-box"></i>
+                    <input type="text" placeholder="Nombre de la Caja" [(ngModel)]="boxName" name="boxName" required>
+                </div>
+                <div class="container-input">
+                    <i class="uil uil-calendar-alt"></i>
+                    <input type="date" [(ngModel)]="boxDate" name="boxDate" required>
+                </div>
+                <div class="container-btn">
+                    <button class="button" type="submit">Añadir Caja</button>
+                </div>
+                <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+            </form>
+        </div>
+    </div>
+
+    <ng-template #loading>
+        <div class="loading-container">
+            <p>Cargando...</p>
+        </div>
+    </ng-template>
+</div>

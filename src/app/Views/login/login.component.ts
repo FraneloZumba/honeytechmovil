@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
+import { firebaseApp } from '../../firebase.config';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    const auth = getAuth(); // Se obtiene la instancia de autenticación de Firebase
+    const auth = getAuth(firebaseApp); // Usa la app inicializada
     signInWithEmailAndPassword(auth, this.email, this.password)
       .then(() => {
         this.router.navigate(['/selector']);
@@ -39,5 +41,31 @@ export class LoginComponent implements OnInit {
 
   goToRegister() {
     this.router.navigate(['/register']);
+  }
+
+  // Login con Google
+  async loginWithGoogle() {
+    const auth = getAuth(firebaseApp);
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log('Usuario logueado con Google:', user);
+
+      const firestore = getFirestore(firebaseApp);
+      const userDoc = doc(firestore, 'users', user.uid);
+      await setDoc(userDoc, {
+        uid: user.uid,
+        email: user.email,
+        nombre: user.displayName,
+        createdAt: new Date(),
+      });
+
+      this.router.navigate(['/selector']);
+    } catch (error: any) {
+      console.error('Error al loguearse con Google:', error);
+      this.errorMessage = 'Error de autenticación con Google';
+    }
   }
 }

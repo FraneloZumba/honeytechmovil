@@ -2,23 +2,26 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 </head>
 <div class="mobile-screen">
-    <!-- Aqui va todo el contenido de cada una de las secciones -->
+    <!-- Aquí va todo el contenido de cada una de las secciones -->
     <div class="content">
         <!-- Contenido de Usuario -->
         <main *ngIf="activeTab === 'usuario'" class="main-content fade-slide">
             <div class="user-header">
-                <i class="uil uil-setting"></i> <!-- Ícono en la esquina superior izquierda -->
+                <i class="uil uil-setting" (click)="goToConfig()"></i> <!-- Ícono en la esquina superior izquierda -->
               </div>
               <div class="profile-pic-container">
                 <div class="profile-pic"></div> <!-- Espacio para la imagen de perfil -->
               </div>
-              <div class="user-info">
+              <div class="user-info" *ngIf="user; else loadingUser">
                 <h2>Usuario</h2>
-                <p>Nombre: HoneyTech</p>
-                <p>Correo: honneytech&#64;gmail.com</p>
-                <p>Teléfono: 0989477669</p>
-                <p>Dirección: Calle 1, Calle 2</p>
+                <p>Nombre: {{ user.nombre }}</p>
+                <p>Correo: {{ user.email }}</p>
+                <p>Teléfono: {{ user.telefono }}</p>
+                <p>Dirección: {{ user.direccion }}</p>
               </div>
+              <ng-template #loadingUser>
+                <p>Cargando datos del usuario...</p>
+              </ng-template>
         </main>
         <!-- Contenido de Cajas -->
         <main *ngIf="activeTab === 'cajas'" class="main-content fade-slide">
@@ -34,7 +37,7 @@
 
                 <!-- Tarjeta con el '+' -->
                 <div class="card plus-card">
-                    <span class="plus-sign">+</span>
+                    <span class="plus-sign" (click)="goToAddBox()" >+</span>
                     <p>Añadir caja</p> <!-- Texto debajo de la tarjeta -->
                 </div>
             </div>
@@ -52,7 +55,7 @@
     </div>
 
 
-    <!-- Aqui el bottom navbar y las clases -->
+    <!-- Aquí el bottom navbar y las clases -->
     <nav class="bottom-navbar">
         <button class="nav-item" [class.active]="activeTab === 'usuario'" (click)="setActiveTab('usuario')">
             <i class="uil uil-user"></i>

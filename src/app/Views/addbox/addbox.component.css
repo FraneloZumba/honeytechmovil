@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    font-family: "Montserrat", serif;
+}
+
+:host {
+    background-color: #1b1b1b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.mobile-screen {
+    width: 375px;
+    height: 667px;
+    background-image: url(https://static.vecteezy.com/system/resources/previews/003/808/879/non_2x/yellow-orange-beehive-background-honeycomb-bees-hive-cells-pattern-bee-honey-shapes-geometric-seamless-texture-symbol-hexagon-hexagonal-raster-mosaic-cell-sign-or-icon-gradation-color-vector.jpg);
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.322);
+    border: 2px solid white;
+    border-radius: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.534);
+    width: 280px;
+    height: 450px;
+    padding: 20px;
+    animation: boom 0.6s ease-out forwards;
+}
+
+@keyframes boom {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.container-form {
+    width: 100%;
+    overflow: hidden;
+}
+
+.container-form form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-form h2 {
+    font-size: 27px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.container-input {
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background-color: #EEEEEE;
+    border-radius: 2rem;
+}
+
+.container-input input, .container-input textarea {
+    border: none;
+    outline: none;
+    width: 75%;
+    height: 90%;
+    background-color: inherit;
+}
+
+.container-input textarea {
+    height: 100px; /* Ajuste para el área de texto */
+}
+
+.container-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.button {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+    width: 175px;
+    height: 45px;
+    font-size: 15px;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    margin-top: 10px;
+    background-color: #ffffff;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}

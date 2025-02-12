@@ -26,6 +26,9 @@
                 <div class="container-btn">
                     <button class="button" type="button" (click)="goToRegister()">IR A REGISTRARSE</button>
                 </div>
+                <div class="container-btn">
+                    <button class="button" type="button" (click)="loginWithGoogle()">Registrarse con Google</button>
+                </div>
                 <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
             </form>
         </div>

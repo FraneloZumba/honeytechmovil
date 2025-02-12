@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { firebaseApp } from '../../firebase.config';
 
@@ -68,6 +68,32 @@ export class RegisterComponent implements OnInit {
       console.error('Error al registrarse:', error);
       this.errorMessage = error.message || 'Error desconocido';
       this.registrationSuccess = false;
+    }
+  }
+
+  // Login con Google
+  async loginWithGoogle() {
+    const auth = getAuth(firebaseApp);
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log('Usuario logueado con Google:', user);
+
+      const firestore = getFirestore(firebaseApp);
+      const userDoc = doc(firestore, 'users', user.uid);
+      await setDoc(userDoc, {
+        uid: user.uid,
+        email: user.email,
+        nombre: user.displayName,
+        createdAt: new Date(),
+      });
+
+      this.router.navigate(['/selector']);
+    } catch (error: any) {
+      console.error('Error al loguearse con Google:', error);
+      this.errorMessage = 'Error de autenticación con Google';
     }
   }
 }
