@@ -5,22 +5,22 @@
     <div class="content">
         <div class="info_containers">
             <h2>{{ cajaNombre }}</h2> <!-- Ahora muestra el nombre real de la caja -->
-            <div class="sections">
-                <div class="mini_container">
+            <div class="dashboard">
+                <div class="card" (click)="goToTemp()">
+                    <h2>Temperatura</h2>
                     <i class="uil uil-temperature-half"></i>
-                    <p>Temperatura</p>
                 </div>
-                <div class="mini_container">
+                <div class="card" (click)="goToHumidity()">
+                    <h2>Humedad</h2>
                     <i class="uil uil-tear"></i>
-                    <p>Humedad</p>
                 </div>
-                <div class="mini_container">
+                <div class="card" (click)="goToWeight()">
+                    <h2>Peso</h2>
                     <i class="uil uil-balance-scale"></i>
-                    <p>Peso</p>
                 </div>
-                <div class="mini_container">
+                <div class="card" (click)="goToCam()">
+                    <h2>Cámaras</h2>
                     <i class="uil uil-camera"></i>
-                    <p>Cámaras</p>
                 </div>
             </div>
             <div class="back_button">

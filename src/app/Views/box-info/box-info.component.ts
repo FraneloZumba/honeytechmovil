@@ -23,4 +23,20 @@ export class BoxInfoComponent implements OnInit {
   goToSelector(): void {
     this.router.navigate(['/selector']);
   }
+
+  goToTemp() {
+    this.router.navigate(['/temp-interface']);
+  }
+  
+  goToHumidity() {
+    this.router.navigate(['/humidity-interface']);
+  }
+  
+  goToWeight() {
+    this.router.navigate(['/weight-interface']);
+  }
+  
+  goToCam() {
+    this.router.navigate(['/cam-interface']);
+  }  
 }

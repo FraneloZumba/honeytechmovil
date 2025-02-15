@@ -6,6 +6,10 @@ import { BoxInfoComponent } from './Views/box-info/box-info.component';
 import { ConfigComponent } from './Views/config/config.component';
 import { AddBoxComponent } from './Views/addbox/addbox.component';
 import { ChangePasswordComponent} from './Views/change-password/change-password.component';
+import { CamInterfaceComponent} from './Views/cam-interface/cam-interface.component';
+import { HumidityInterfaceComponent } from './Views/humidity-interface/humidity-interface.component';
+import { TempInterfaceComponent } from './Views/temp-interface/temp-interface.component';
+import { WeightInterfaceComponent } from './Views/weight-interface/weight-interface.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,4 +20,8 @@ export const routes: Routes = [
   { path: 'config', component: ConfigComponent },
   { path: 'addbox', component: AddBoxComponent },
   { path: 'change-password', component: ChangePasswordComponent },
+  { path: 'cam-interface', component: CamInterfaceComponent},
+  { path: 'humidity-interface', component: HumidityInterfaceComponent },
+  { path: 'temp-interface', component: TempInterfaceComponent },
+  { path: 'weight-interface', component: WeightInterfaceComponent },
 ];

@@ -6,7 +6,7 @@
 }
 
 h2 {
-    color: #333;
+    color: #ffffff;
 }
 
 :host {
@@ -23,7 +23,6 @@ h2 {
     width: 375px;
     height: 667px;
     /* Tamaño fijo para simular una pantalla móvil */
-    background-color: #f0f0f0;
     border-radius: 30px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     overflow: hidden;
@@ -31,6 +30,7 @@ h2 {
     display: flex;
     flex-direction: column;
     position: relative;
+    background-image: url(https://img.freepik.com/vector-gratis/gradiente-fondo-diseno-moderno-colorido_677411-4248.jpg);
 }
 
 /* Animación de slide-up con fade */
@@ -57,6 +57,8 @@ h2 {
     overflow: hidden;
     animation: slide-up-fade 0.5s ease-out;
     /* Aplica la animación al contenedor */
+    color: #ffffff;
+
 }
 
 .mini_container,
@@ -70,11 +72,11 @@ h2 {
     /* Asegura que mantengan su estado final */
     opacity: 0;
     /* Comienza invisible */
+    color: #ffffff;
+
 }
 
 .mini_container {
-    background-image: url("https://w7.pngwing.com/pngs/758/386/png-transparent-simple-white-honeycomb-pattern-background-white-polygon-honeycomb.png");
-    background-size: cover;
     border-radius: 15px;
     color: rgb(153, 153, 153);
     font-size: 25px;
@@ -85,11 +87,14 @@ h2 {
 .mini_container p {
     font-size: 25px;
     margin-top: 5px;
+    color: #ffffff;
     /* Reduce la distancia entre el ícono y el texto */
 }
 
 .mini_container i {
     font-size: 45px;
+    color: #ffffff;
+
 }
 
 .back_button {
@@ -104,4 +109,14 @@ h2 {
 .back_button p {
     font-size: 45px;
     padding-top: 7px;
+    color: #ffffff;
+}
+
+.card{
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border-radius: 15px;
+}
+
+.card i{
+    font-size: 45px;
 }
