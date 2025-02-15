@@ -81,6 +81,7 @@ h2 {
 
 .nav-item {
     color: #333;
+    background-color: transparent;
     text-decoration: none;
     font-size: 14px;
     display: flex;
@@ -88,6 +89,7 @@ h2 {
     align-items: center;
     transition: color 0.3s;
     gap: 5px;
+    border: none;
     /* Espaciado adicional entre el icono y el texto */
 }
 
@@ -215,6 +217,16 @@ h2 {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    /* Asegura que el contenido no esté centrado */
+    height: 100%;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.submain-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     /* Asegura que el contenido no esté centrado */
     height: 100%;
     border-radius: 15px;
@@ -383,6 +395,59 @@ h2 {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+/* Animación de fade-slide */
+@keyframes fade-slide {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
 
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.fade-slide {
+    animation: fade-slide 0.5s ease-out forwards;
+}
+
+/* Estilo específico para el contenedor del iframe */
+.chatbot-frame-container {
+    margin-top: 20px;
+    width: 100%;
+    height: 500px;  /* Ajusta la altura según sea necesario */
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;  /* Evita que el contenido se desborde */
+    position: relative;  /* Necesario para aplicar las transiciones */
+}
+
+/* Estilo específico para el iframe */
+.chatbot-frame {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;  /* Asegura que el iframe se ajuste bien al contenedor */
+}
+/* Estilos para los mensajes del usuario */
+.user-message {
+    background-color: #d9f7be;
+    align-self: flex-end;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+  }
   
+  /* Estilos para los mensajes del bot */
+  .bot-message {
+    background-color: #e0e0e0;
+    align-self: flex-start;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+  }
   

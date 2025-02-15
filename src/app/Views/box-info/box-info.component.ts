@@ -1,11 +1,26 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-box-info',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './box-info.component.html',
-  styleUrl: './box-info.component.css'
+  styleUrls: ['./box-info.component.css']
 })
-export class BoxInfoComponent {
+export class BoxInfoComponent implements OnInit {
+  cajaNombre: string = 'Desconocida';
 
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.cajaNombre = params.get('nombre') || 'Desconocida';
+    });
+  }
+
+  goToSelector(): void {
+    this.router.navigate(['/selector']);
+  }
 }

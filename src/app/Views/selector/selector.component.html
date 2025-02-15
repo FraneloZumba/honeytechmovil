@@ -2,60 +2,69 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 </head>
 <div class="mobile-screen">
-    <!-- Aquí va todo el contenido de cada una de las secciones -->
     <div class="content">
         <!-- Contenido de Usuario -->
         <main *ngIf="activeTab === 'usuario'" class="main-content fade-slide">
             <div class="user-header">
-                <i class="uil uil-setting" (click)="goToConfig()"></i> <!-- Ícono en la esquina superior izquierda -->
-              </div>
-              <div class="profile-pic-container">
-                <div class="profile-pic"></div> <!-- Espacio para la imagen de perfil -->
-              </div>
-              <div class="user-info" *ngIf="user; else loadingUser">
+                <i class="uil uil-setting" (click)="goToConfig()"></i>
+            </div>
+            <div class="profile-pic-container">
+                <div class="profile-pic"></div>
+            </div>
+            <div class="user-info" *ngIf="user; else loadingUser">
                 <h2>Usuario</h2>
                 <p>Nombre: {{ user.nombre }}</p>
                 <p>Correo: {{ user.email }}</p>
                 <p>Teléfono: {{ user.telefono }}</p>
                 <p>Dirección: {{ user.direccion }}</p>
-              </div>
-              <ng-template #loadingUser>
+            </div>
+            <ng-template #loadingUser>
                 <p>Cargando datos del usuario...</p>
-              </ng-template>
+            </ng-template>
         </main>
+
         <!-- Contenido de Cajas -->
         <main *ngIf="activeTab === 'cajas'" class="main-content fade-slide">
             <h2>Cajas</h2>
             <div class="card-container">
-                <!-- Tarjeta con espacio para imagen -->
-                <div class="card image-card">
-                    <div class="image-placeholder">
-                        <img src="https://cdn-icons-png.flaticon.com/512/5532/5532157.png" alt="">
-                    </div>
-                    <p>Caja 1</p> <!-- Texto debajo de la tarjeta -->
+                <!-- Tarjeta para añadir una nueva caja -->
+                <div class="card plus-card" (click)="goToAddBox()">
+                    <span class="plus-sign">+</span>
+                    <p>Añadir caja</p>
                 </div>
 
-                <!-- Tarjeta con el '+' -->
-                <div class="card plus-card">
-                    <span class="plus-sign" (click)="goToAddBox()" >+</span>
-                    <p>Añadir caja</p> <!-- Texto debajo de la tarjeta -->
+                <!-- Mostrar cajas de Firebase -->
+                <div *ngIf="cajas.length > 0; else noData">
+                    <div *ngFor="let caja of cajas" class="card image-card" (click)="goToBoxInfo(caja.nombre)">
+                        <div class="image-placeholder">
+                            <img src="https://cdn-icons-png.flaticon.com/512/5532/5532157.png" alt="Caja">
+                        </div>
+                        <p>{{ caja.nombre }}</p>
+                    </div>
                 </div>
+
+                <!-- Si no hay cajas registradas -->
+                <ng-template #noData>
+                    <p>No hay cajas registradas.</p>
+                </ng-template>
             </div>
         </main>
-        <!-- Contenido de ChatBot -->
-        <main *ngIf="activeTab === 'chatbot'" class="main-content fade-slide">
-            <h2>ChatBot</h2>
-            <div class="chat-container">
-                <div class="chat-input">
-                    <input type="text" placeholder="Escribe tu mensaje..." />
-                    <button class="send-btn">Enviar</button>
-                </div>
+
+        <!-- Contenido del Chatbot -->
+        <main *ngIf="activeTab === 'chatbot'" class="submain-content fade-slide">
+            <div id="chatbot-container">
+                <iframe 
+                    src="https://www.chatbase.co/chatbot-iframe/M8_v-4zedtMcmD5UbHAOU" 
+                    width="100%" 
+                    height="500px" 
+                    style="border:none;"
+                    allow="microphone"
+                    id="chatbot-iframe">
+                </iframe>
             </div>
         </main>
     </div>
 
-
-    <!-- Aquí el bottom navbar y las clases -->
     <nav class="bottom-navbar">
         <button class="nav-item" [class.active]="activeTab === 'usuario'" (click)="setActiveTab('usuario')">
             <i class="uil uil-user"></i>
@@ -67,7 +76,7 @@
         </button>
         <button class="nav-item" [class.active]="activeTab === 'chatbot'" (click)="setActiveTab('chatbot')">
             <i class="uil uil-robot"></i>
-            <span>ChatBot</span>
+            <span>Chatbot</span>
         </button>
-    </nav>    
+    </nav>
 </div>

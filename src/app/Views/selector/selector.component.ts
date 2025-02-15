@@ -1,33 +1,50 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { firebaseApp } from '../../firebase.config'; 
+import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { firebaseApp } from '../../firebase.config';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-selector',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.css']
 })
-export class SelectorComponent implements OnInit {
+export class SelectorComponent implements OnInit, OnDestroy {
   activeTab: string = 'cajas';
-  cajas: any[] = [{ id: 1, nombre: 'Caja 1' }];
-  isLoaded: boolean = false;
-  user: any = null;  // Para almacenar los datos del usuario
+  cajas: any[] = [];
+  userMessage: string = '';
+  messages: any[] = [];
+  user: any = null;
+  chatScriptLoaded: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private elRef: ElementRef,
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.isLoaded = true;
-      this.loadUserData();  // Cargar los datos del usuario al iniciar
-    }, 2000);
+    this.loadUserData();
+    this.loadCajas();
   }
 
-  // Método para obtener los datos del usuario desde Firestore
+  ngOnDestroy(): void {
+    this.removeChatScript();
+  }
+
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
+    if (tab === 'chatbot' && !this.chatScriptLoaded) {
+      this.loadChatScript();
+    } else if (tab !== 'chatbot') {
+      this.removeChatScript();
+    }
+  }
+
   async loadUserData(): Promise<void> {
     const auth = getAuth(firebaseApp);
     const firestore = getFirestore(firebaseApp);
@@ -36,7 +53,6 @@ export class SelectorComponent implements OnInit {
     if (user) {
       const userDocRef = doc(firestore, 'users', user.uid);
       const userDoc = await getDoc(userDocRef);
-
       if (userDoc.exists()) {
         this.user = userDoc.data();
       } else {
@@ -47,31 +63,87 @@ export class SelectorComponent implements OnInit {
     }
   }
 
-  setActiveTab(tab: string): void {
-    this.activeTab = tab;
+  async loadCajas(): Promise<void> {
+    const firestore = getFirestore(firebaseApp);
+    const cajasCollection = collection(firestore, 'cajas');
+    const querySnapshot = await getDocs(cajasCollection);
+    this.cajas = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   }
 
-  addCaja(): void {
-    const container = document.querySelector('.cards-container');
-    if (container) {
-      container.classList.add('animating');
+  sendMessage(): void {
+    if (this.userMessage.trim()) {
+      this.messages.push({ text: this.userMessage, isUser: true });
+      this.getChatbaseResponse(this.userMessage);
+      this.userMessage = '';
+    }
+  }
+
+  getChatbaseResponse(userMessage: string): void {
+    const chatbase = (window as any).chatbase;
+    if (chatbase) {
+      chatbase('send', {
+        message: userMessage,
+        user: this.user?.id || 'anonimo',
+        bot_id: 'M8_v-4zedtMcmD5UbHAOU',
+        success: (response: any) => {
+          this.messages.push({ text: response.text, isUser: false });
+        },
+        error: (err: any) => {
+          console.error('Error al obtener respuesta del bot:', err);
+        }
+      });
+    } else {
+      console.error('Chatbase no está definido en window');
+    }
+  }
+
+  loadChatScript(): void {
+    if (!document.getElementById('chatbase-script')) {
+      const script = this.renderer.createElement('script');
+      script.src = 'https://www.chatbase.co/embed.min.js';
+      script.id = 'chatbase-script';
+      script.dataset.botId = 'M8_v-4zedtMcmD5UbHAOU';
+      script.dataset.domain = 'www.chatbase.co';
+      script.onload = () => {
+        this.chatScriptLoaded = true;
+        this.insertChatbot();
+      };
+      this.renderer.appendChild(document.body, script);
+    } else {
+      this.insertChatbot();
+    }
+  }
+
+  insertChatbot(): void {
+    setTimeout(() => {
+      const chatbotIframe = document.querySelector("iframe[data-bot-id='M8_v-4zedtMcmD5UbHAOU']") as HTMLIFrameElement | null;
+
+      if (chatbotIframe) {
+        chatbotIframe.style.width = "100%";
+        chatbotIframe.style.height = "100%";
+        chatbotIframe.style.border = "none"; 
+
+        const chatbotContainer = this.elRef.nativeElement.querySelector("#chatbot-container");
+        if (chatbotContainer && !chatbotContainer.contains(chatbotIframe)) {
+          chatbotContainer.appendChild(chatbotIframe);
+        }
+      } else {
+        console.warn("No se encontró el iframe del chatbot.");
+      }
+    }, 2500); // Tiempo aumentado para asegurar la carga
+  }
+
+  removeChatScript(): void {
+    const script = document.getElementById('chatbase-script');
+    if (script) {
+      script.remove();
+      this.chatScriptLoaded = false;
     }
 
-    const nuevaCaja = {
-      id: this.cajas.length + 1,
-      nombre: `Caja ${this.cajas.length + 1}`
-    };
-
-    setTimeout(() => {
-      this.cajas.push(nuevaCaja);
-      if (container) {
-        container.classList.remove('animating');
-      }
-    }, 500);
-  }
-
-  viewBoxInfo(cajaId: number): void {
-    this.router.navigate(['/box-info', cajaId]);
+    const chatbotIframe = document.querySelector("iframe[data-bot-id='M8_v-4zedtMcmD5UbHAOU']") as HTMLIFrameElement | null;
+    if (chatbotIframe) {
+      chatbotIframe.remove();
+    }
   }
 
   goToUserInterface(): void {
@@ -88,5 +160,9 @@ export class SelectorComponent implements OnInit {
 
   goToAddBox(): void {
     this.router.navigate(['/addbox']);
+  }
+
+  goToBoxInfo(cajaNombre: string): void {
+    this.router.navigate(['/box-info', cajaNombre]);
   }
 }

@@ -2,10 +2,9 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 </head>
 <div class="mobile-screen">
-    <!-- Aqui va todo el contenido de cada una de las secciones -->
     <div class="content">
         <div class="info_containers">
-            <h2>Caja #</h2>
+            <h2>{{ cajaNombre }}</h2> <!-- Ahora muestra el nombre real de la caja -->
             <div class="sections">
                 <div class="mini_container">
                     <i class="uil uil-temperature-half"></i>
@@ -25,7 +24,8 @@
                 </div>
             </div>
             <div class="back_button">
-                <p><i class="uil uil-angle-left"></i></p>
+                <p><i class="uil uil-angle-left" (click)="goToSelector()"></i></p>
             </div>
         </div>
     </div>
+</div>
