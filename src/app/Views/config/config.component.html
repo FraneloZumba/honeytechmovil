@@ -12,21 +12,22 @@
         <!-- Bloque de perfil -->
         <div class="profile-section">
             <div class="profile-info">
-                <img src="" alt="Avatar" class="profile-avatar">
-                <div class="profile-details">
-                    <div class="name-and-badge">
-                        <h3>{{ user.nombre }}</h3>
-                        <button class="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 24">
-                                <path d="m18 0 8 12 10-8-4 20H4L0 4l10 8 8-12z"></path>
-                            </svg>
-                            Pro
-                        </button>
-                    </div>
-                    <p>{{ user.email }}</p>
+              <img [src]="user?.profileImageUrl || 'default-avatar.png'" class="profile-avatar" (click)="fileInput.click()">
+              <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;">
+              <div class="profile-details">
+                <div class="name-and-badge">
+                  <h3>{{ user.nombre }}</h3>
+                  <button class="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 24">
+                      <path d="m18 0 8 12 10-8-4 20H4L0 4l10 8 8-12z"></path>
+                    </svg>
+                    Pro
+                  </button>
                 </div>
+                <p>{{ user.email }}</p>
+              </div>
             </div>
-        </div>
+          </div>          
         <!-- Bloque de ajustes generales -->
         <div class="settings-section">
             <h3>General</h3>
@@ -44,12 +45,7 @@
         <!-- Bloque de privacidad -->
         <div class="settings-section">
             <h3>Privacidad</h3>
-            <div class="setting-item">
-                <i class="uil uil-lock"></i>
-                <span>Cambiar contraseña</span>
-                <i class="uil uil-angle-right"></i>
-            </div>
-            <div class="setting-item">
+            <div class="setting-item"(click)="goToChangePassword()">
                 <i class="uil uil-user"></i>
                 <span>Gestionar cuenta</span>
                 <i class="uil uil-angle-right"></i>
@@ -57,7 +53,7 @@
         </div>
         <!-- Botón de cerrar sesión -->
         <div class="logout-section">
-            <button class="logout-btn">Cerrar sesión</button>
+            <button class="logout-btn" (click)="goToLogin()">Cerrar sesión</button>
         </div>
     </div>
 </div>

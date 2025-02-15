@@ -236,12 +236,8 @@ h2 {
 .card-container {
     display: flex;
     gap: 20px;
-    /* Espacio entre las tarjetas */
-    justify-content: center;
-    /* Alinea las tarjetas al principio */
-    align-items: flex-start;
-    /* Alinea las tarjetas arriba */
-    margin-top: 20px;
+    justify-content: center; /* Centra las tarjetas horizontalmente */
+    align-items: flex-start; /* Alinea las tarjetas al inicio de la fila */
 }
 
 .card {
@@ -249,31 +245,26 @@ h2 {
     width: 150px;
     height: 175px;
     background-color: #fff;
-    border: 5px solid #ffd000;
-    /* Borde amarillo */
-    border-radius: 15px;
-    /* Bordes redondeados */
+    border: 5px solid #ffd000; /* Borde amarillo */
+    border-radius: 15px; /* Bordes redondeados */
     display: flex;
     justify-content: center;
-    align-items: center;
-    /* Alinea el contenido hacia arriba */
+    align-items: center; /* Alinea el contenido hacia arriba */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     position: relative;
-    flex-direction: column;
-    /* Mantiene el texto debajo de la tarjeta */
-    padding-top: 15px;
-    /* Añade espacio en la parte superior de las tarjetas */
+    flex-direction: column; /* Mantiene el texto debajo de la tarjeta */
+    padding-top: 15px; /* Añade espacio en la parte superior de las tarjetas */
+    margin-bottom: 20px; /* Agrega un margen en la parte inferior de cada tarjeta para evitar que se toquen */
 }
 
 .card p {
-    margin-top: 10px;
-    /* Añadir espacio arriba del texto */
+    margin-top: 10px; /* Añadir espacio arriba del texto */
     font-weight: 600;
     font-size: 14px;
     color: #333;
-    text-align: center;
-    /* Centra el texto debajo de cada tarjeta */
+    text-align: center; /* Centra el texto debajo de cada tarjeta */
 }
+
 
 
 /* Tarjeta con espacio para imagen */
