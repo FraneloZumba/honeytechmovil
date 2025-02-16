@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Chart } from 'chart.js/auto';
 
 @Component({
@@ -8,13 +8,20 @@ import { Chart } from 'chart.js/auto';
   templateUrl: './humidity-interface.component.html',
   styleUrl: './humidity-interface.component.css'
 })
-export class HumidityInterfaceComponent implements OnInit{
+export class HumidityInterfaceComponent implements OnInit {
 
   public humed_semanal: Chart | null = null;
   public humed_mensual: Chart | null = null;
   public humed_anual: Chart | null = null;
+  public cajaNombre: string = 'Desconocida';
+
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.cajaNombre = params.get('nombre') || 'Desconocida';
+    });
+
     this.initCharts();
   }
 
@@ -72,4 +79,7 @@ export class HumidityInterfaceComponent implements OnInit{
     });
   }
 
+  goToBoxInfo(): void {
+    this.router.navigate(['/box-info', this.cajaNombre]);
+  }
 }

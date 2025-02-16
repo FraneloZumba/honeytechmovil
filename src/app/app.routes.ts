@@ -20,8 +20,8 @@ export const routes: Routes = [
   { path: 'config', component: ConfigComponent },
   { path: 'addbox', component: AddBoxComponent },
   { path: 'change-password', component: ChangePasswordComponent },
-  { path: 'cam-interface', component: CamInterfaceComponent},
-  { path: 'humidity-interface', component: HumidityInterfaceComponent },
-  { path: 'temp-interface', component: TempInterfaceComponent },
-  { path: 'weight-interface', component: WeightInterfaceComponent },
+  { path: 'cam-interface/:nombre', component: CamInterfaceComponent},
+  { path: 'humidity-interface/:nombre', component: HumidityInterfaceComponent },
+  { path: 'temp-interface/:nombre', component: TempInterfaceComponent },
+  { path: 'weight-interface/:nombre', component: WeightInterfaceComponent },
 ];

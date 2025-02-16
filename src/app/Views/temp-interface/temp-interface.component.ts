@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'app-temp-interface',
-  imports: [],
   templateUrl: './temp-interface.component.html',
   styleUrl: './temp-interface.component.css'
 })
-export class TempInterfaceComponent implements OnInit{
-
+export class TempInterfaceComponent implements OnInit {
   public temp_semanal: Chart | null = null;
   public temp_mensual: Chart | null = null;
   public temp_anual: Chart | null = null;
+  public cajaNombre: string = 'Desconocida';
+
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.cajaNombre = params.get('nombre') || 'Desconocida';
+    });
+
     this.initCharts();
   }
 
@@ -72,4 +77,7 @@ export class TempInterfaceComponent implements OnInit{
     });
   }
   
+  goToBoxInfo(): void {
+    this.router.navigate(['/box-info', this.cajaNombre]);
+  }
 }
