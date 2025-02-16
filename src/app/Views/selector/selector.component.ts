@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
 import { firebaseApp } from '../../firebase.config';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -64,9 +64,21 @@ export class SelectorComponent implements OnInit, OnDestroy {
   }
 
   async loadCajas(): Promise<void> {
+    const auth = getAuth(firebaseApp);
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.log('Usuario no autenticado');
+      return;
+    }
+
     const firestore = getFirestore(firebaseApp);
     const cajasCollection = collection(firestore, 'cajas');
-    const querySnapshot = await getDocs(cajasCollection);
+
+    // Filtrar cajas por el usuario actual
+    const q = query(cajasCollection, where('usuarioId', '==', user.uid));
+    const querySnapshot = await getDocs(q);
+
     this.cajas = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   }
 
@@ -130,7 +142,7 @@ export class SelectorComponent implements OnInit, OnDestroy {
       } else {
         console.warn("No se encontró el iframe del chatbot.");
       }
-    }, 2500); // Tiempo aumentado para asegurar la carga
+    }, 2500);
   }
 
   removeChatScript(): void {

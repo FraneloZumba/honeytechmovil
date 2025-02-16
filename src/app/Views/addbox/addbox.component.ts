@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth'; // Importar autenticación
 import { firebaseApp } from '../../firebase.config';
 
 @Component({
@@ -26,7 +27,14 @@ export class AddBoxComponent {
       return;
     }
 
-    // Guardar la caja en Firebase
+    const auth = getAuth(firebaseApp);
+    const user = auth.currentUser;
+
+    if (!user) {
+      this.errorMessage = 'No hay usuario autenticado.';
+      return;
+    }
+
     const firestore = getFirestore(firebaseApp);
     const cajasCollection = collection(firestore, 'cajas');
 
@@ -34,10 +42,11 @@ export class AddBoxComponent {
       await addDoc(cajasCollection, {
         nombre: this.boxName,
         fecha: this.boxDate,
+        usuarioId: user.uid, // Asignar la caja al usuario autenticado
       });
 
       this.errorMessage = null;
-      console.log('Caja añadida:', { boxName: this.boxName, boxDate: this.boxDate});
+      console.log('Caja añadida:', { boxName: this.boxName, boxDate: this.boxDate, usuarioId: user.uid });
 
       // Redirigir al selector
       this.router.navigate(['/selector']);
