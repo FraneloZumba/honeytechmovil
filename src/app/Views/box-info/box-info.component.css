@@ -3,10 +3,15 @@
 
 * {
     font-family: "Montserrat", serif;
+    color: black;
 }
 
 h2 {
-    color: #ffffff;
+    color: #000000;
+}
+
+.box-name{
+    color: black;
 }
 
 :host {
@@ -30,7 +35,7 @@ h2 {
     display: flex;
     flex-direction: column;
     position: relative;
-    background-image: url(https://img.freepik.com/vector-gratis/gradiente-fondo-diseno-moderno-colorido_677411-4248.jpg);
+    background-color: white;
 }
 
 /* Animación de slide-up con fade */
@@ -56,8 +61,6 @@ h2 {
     text-align: center;
     overflow: hidden;
     animation: slide-up-fade 0.5s ease-out;
-    /* Aplica la animación al contenedor */
-    color: #ffffff;
 
 }
 
@@ -71,8 +74,6 @@ h2 {
     animation-fill-mode: forwards;
     /* Asegura que mantengan su estado final */
     opacity: 0;
-    /* Comienza invisible */
-    color: #ffffff;
 
 }
 
@@ -113,7 +114,8 @@ h2 {
 }
 
 .card{
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    background: rgb(255,192,98);
+background: linear-gradient(135deg, rgba(255,192,98,1) 0%, rgba(255,171,67,1) 35%, rgba(252,205,26,1) 100%);
     border-radius: 15px;
 }
 

@@ -5,6 +5,10 @@
     font-family: "Montserrat", serif;
 }
 
+iframe{
+    border-radius: 2rem;
+}
+
 h2 {
     color: #333;
 }

@@ -8,16 +8,22 @@
             <h2>Temperatura</h2>
             <div class="sections">
                 <div class="section">
-                    <p class="section-title">Diaria</p>
-                    <div class="mini_container"></div>
+                    <p class="section-title">Semanal</p>
+                    <div class="mini_container">
+                        <canvas id="chart_semanal">{{ temp_semanal }}</canvas>
+                    </div>
                 </div>
                 <div class="section">
                     <p class="section-title">Mensual</p>
-                    <div class="mini_container"></div>
+                    <div class="mini_container">
+                        <canvas id="chart_mensual">{{temp_mensual}}</canvas>
+                    </div>
                 </div>
                 <div class="section">
                     <p class="section-title">Anual</p>
-                    <div class="mini_container"></div>
+                    <div class="mini_container">
+                        <canvas id="chart_anual">{{temp_anual}}</canvas>
+                    </div>
                 </div>
             </div>
             <div class="back_button">
