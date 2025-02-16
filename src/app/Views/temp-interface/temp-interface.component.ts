@@ -8,6 +8,7 @@ import { Chart } from 'chart.js/auto';
   styleUrl: './temp-interface.component.css'
 })
 export class TempInterfaceComponent implements OnInit {
+  public temp_ahora: Chart | null = null;
   public temp_semanal: Chart | null = null;
   public temp_mensual: Chart | null = null;
   public temp_anual: Chart | null = null;
@@ -24,6 +25,18 @@ export class TempInterfaceComponent implements OnInit {
   }
 
   private initCharts() {
+    // Datos para el gráfico de tiempo real
+    const dataAhora = {
+      labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+      datasets: [{
+        label: 'Tiempo real',
+        data: [65, 59, 80, 81, 56, 55, 90],
+        fill: false,
+        borderColor: 'rgb(25, 242, 100)',
+        tension: 0.1
+      }]
+    };
+    
     // Datos para el gráfico semanal
     const dataSemanal = {
       labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
@@ -61,6 +74,11 @@ export class TempInterfaceComponent implements OnInit {
     };
 
     // Inicializar gráficos
+    this.temp_ahora = new Chart("chart_ahora", {
+      type: 'line',
+      data: dataAhora
+    });
+
     this.temp_semanal = new Chart("chart_semanal", {
       type: 'line',
       data: dataSemanal
