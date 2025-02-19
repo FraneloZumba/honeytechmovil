@@ -1,8 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-*{
+* {
     font-family: "Montserrat", serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 :host {
@@ -15,11 +27,14 @@
 }
 
 .mobile-screen {
-    width: 375px;
-    height: 667px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background-image: url(https://static.vecteezy.com/system/resources/previews/003/808/879/non_2x/yellow-orange-beehive-background-honeycomb-bees-hive-cells-pattern-bee-honey-shapes-geometric-seamless-texture-symbol-hexagon-hexagonal-raster-mosaic-cell-sign-or-icon-gradation-color-vector.jpg);
-    border-radius: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    box-shadow: none;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -32,7 +47,7 @@
     border: 2px solid white;
     border-radius: 2rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.534);
-    width: 280px;
+    width: 320px;
     height: 450px;
     padding: 20px;
     animation: boom 0.6s ease-out forwards;
@@ -43,10 +58,12 @@
         transform: scale(0);
         opacity: 0;
     }
+
     50% {
         transform: scale(1.1);
         opacity: 1;
     }
+
     100% {
         transform: scale(1);
         opacity: 1;
@@ -72,6 +89,26 @@
     text-align: center;
 }
 
+.social-networks {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.social-networks i {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.container-form span {
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
 .container-input {
     width: 100%;
     max-width: 300px;
@@ -85,7 +122,7 @@
     border-radius: 2rem;
 }
 
-.container-input input, .container-input textarea {
+.container-input input {
     border: none;
     outline: none;
     width: 75%;
@@ -93,8 +130,12 @@
     background-color: inherit;
 }
 
-.container-input textarea {
-    height: 100px; /* Ajuste para el área de texto */
+.container-form a {
+    color: black;
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    text-align: center;
 }
 
 .container-btn {
@@ -106,7 +147,6 @@
 
 .button {
     transition: background-color 0.3s ease, color 0.3s ease;
-    width: 100%;
     width: 175px;
     height: 45px;
     font-size: 15px;
@@ -117,9 +157,31 @@
     background-color: #ffffff;
 }
 
-.error {
-    color: red;
-    font-size: 14px;
-    text-align: center;
-    margin-top: 10px;
+/* Media Queries para adaptar el mobile-screen a pantallas más grandes */
+@media (min-width: 480px) {
+    .mobile-screen {
+        width: 100vw;
+        height: 100vh;
+    }
+}
+
+@media (min-width: 600px) {
+    .mobile-screen {
+        width: 100vw;
+        height: 100vh;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-screen {
+        width: 100vw;
+        height: 100vh;
+    }
+}
+
+@media (min-width: 1024px) {
+    .mobile-screen {
+        width: 100vw;
+        height: 100vh;
+    }
 }

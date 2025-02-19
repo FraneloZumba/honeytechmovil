@@ -3,31 +3,49 @@
 
 * {
     font-family: "Montserrat", serif;
+    box-sizing: border-box;
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Elimina cualquier tipo de scroll */
+}
+
+
+html, body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+
+
 :host {
-    background-color: #1b1b1b;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
-    /* Asegúrate de que el componente no permita scroll */
 }
+
+
 
 /*Formato de pantalla movil*/
 .mobile-screen {
-    width: 375px;
-    height: 667px;
-    /* Tamaño fijo para simular una pantalla móvil */
+    position: fixed; /* Lo hace fijo para que ocupe toda la pantalla */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Ocupa todo el ancho de la pantalla */
+    height: 100vh; /* Ocupa todo el alto de la pantalla */
     background-color: #f0f0f0;
-    border-radius: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    /* Impide scroll dentro del contenedor */
+    border-radius: 0; /* Elimina bordes redondeados */
+    box-shadow: none; /* Elimina cualquier sombra */
     display: flex;
     flex-direction: column;
-    position: relative;
+    overflow: hidden; /* Elimina scroll */
 }
 
 /* Header */
