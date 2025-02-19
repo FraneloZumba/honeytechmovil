@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { firebaseApp } from '../../firebase.config';
+import { firebaseAuthApp } from '../../firebase.config';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 @Component({
@@ -24,8 +24,8 @@ export class ConfigComponent implements OnInit {
   }
 
   async loadUserData(): Promise<void> {
-    const auth = getAuth(firebaseApp);
-    const firestore = getFirestore(firebaseApp);
+    const auth = getAuth(firebaseAuthApp);
+    const firestore = getFirestore(firebaseAuthApp);
     const user = auth.currentUser;
 
     if (user) {
@@ -46,7 +46,7 @@ export class ConfigComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       // Subir archivo a Firebase Storage
-      const storage = getStorage(firebaseApp);
+      const storage = getStorage(firebaseAuthApp);
       const storageRef = ref(storage, 'profile-images/' + file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -69,8 +69,8 @@ export class ConfigComponent implements OnInit {
   }
 
   async updateProfileImage(imageUrl: string): Promise<void> {
-    const auth = getAuth(firebaseApp);
-    const firestore = getFirestore(firebaseApp);
+    const auth = getAuth(firebaseAuthApp);
+    const firestore = getFirestore(firebaseAuthApp);
     const user = auth.currentUser;
 
     if (user) {

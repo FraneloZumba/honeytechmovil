@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
-import { firebaseApp } from '../../firebase.config';
+import { firebaseAuthApp } from '../../firebase.config';
+
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    const auth = getAuth(firebaseApp); // Usa la app inicializada
+    const auth = getAuth(firebaseAuthApp ); // Usa la app inicializada
     signInWithEmailAndPassword(auth, this.email, this.password)
       .then(() => {
         this.router.navigate(['/selector']);
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
 
   // Login con Google
   async loginWithGoogle() {
-    const auth = getAuth(firebaseApp);
+    const auth = getAuth(firebaseAuthApp );
     const provider = new GoogleAuthProvider();
 
     try {
@@ -53,7 +54,7 @@ export class LoginComponent implements OnInit {
       const user = result.user;
       console.log('Usuario logueado con Google:', user);
 
-      const firestore = getFirestore(firebaseApp);
+      const firestore = getFirestore(firebaseAuthApp );
       const userDoc = doc(firestore, 'users', user.uid);
       await setDoc(userDoc, {
         uid: user.uid,

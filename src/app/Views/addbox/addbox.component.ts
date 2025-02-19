@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; // Importar autenticación
-import { firebaseApp } from '../../firebase.config';
+import { firebaseAuthApp } from '../../firebase.config';
 
 @Component({
   selector: 'app-addbox',
@@ -27,7 +27,7 @@ export class AddBoxComponent {
       return;
     }
 
-    const auth = getAuth(firebaseApp);
+    const auth = getAuth(firebaseAuthApp);
     const user = auth.currentUser;
 
     if (!user) {
@@ -35,7 +35,7 @@ export class AddBoxComponent {
       return;
     }
 
-    const firestore = getFirestore(firebaseApp);
+    const firestore = getFirestore(firebaseAuthApp);
     const cajasCollection = collection(firestore, 'cajas');
 
     try {

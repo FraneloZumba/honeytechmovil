@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { getAuth, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { getFirestore, doc, updateDoc, getDoc } from 'firebase/firestore';
-import { firebaseApp } from '../../firebase.config';
+import { firebaseAuthApp } from '../../firebase.config';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,8 +27,8 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   async loadUserData(): Promise<void> {
-    const auth = getAuth(firebaseApp);
-    const firestore = getFirestore(firebaseApp);
+    const auth = getAuth(firebaseAuthApp);
+    const firestore = getFirestore(firebaseAuthApp);
     const user = auth.currentUser;
 
     if (user) {
@@ -46,8 +46,8 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   async updateProfile(): Promise<void> {
-    const auth = getAuth(firebaseApp);
-    const firestore = getFirestore(firebaseApp);
+    const auth = getAuth(firebaseAuthApp);
+    const firestore = getFirestore(firebaseAuthApp);
     const user = auth.currentUser;
 
     if (!user) {

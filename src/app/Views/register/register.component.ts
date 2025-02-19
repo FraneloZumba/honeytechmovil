@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
-import { firebaseApp } from '../../firebase.config';
+import { firebaseAuthApp } from '../../firebase.config';
 
 @Component({
   selector: 'app-register',
@@ -34,8 +34,8 @@ export class RegisterComponent implements OnInit {
   }
 
   async registrarse(): Promise<void> {
-    const auth = getAuth(firebaseApp); // Usa la app inicializada
-    const firestore = getFirestore(firebaseApp);
+    const auth = getAuth(firebaseAuthApp); // Usa la app inicializada
+    const firestore = getFirestore(firebaseAuthApp);
 
     try {
       // Registrar usuario en Firebase Authentication
@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
 
   // Login con Google
   async loginWithGoogle() {
-    const auth = getAuth(firebaseApp);
+    const auth = getAuth(firebaseAuthApp);
     const provider = new GoogleAuthProvider();
 
     try {
@@ -81,7 +81,7 @@ export class RegisterComponent implements OnInit {
       const user = result.user;
       console.log('Usuario logueado con Google:', user);
 
-      const firestore = getFirestore(firebaseApp);
+      const firestore = getFirestore(firebaseAuthApp);
       const userDoc = doc(firestore, 'users', user.uid);
       await setDoc(userDoc, {
         uid: user.uid,

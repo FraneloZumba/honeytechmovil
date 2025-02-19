@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/co
 import { Router } from '@angular/router';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
-import { firebaseApp } from '../../firebase.config';
+import { firebaseAuthApp } from '../../firebase.config';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -46,8 +46,8 @@ export class SelectorComponent implements OnInit, OnDestroy {
   }
 
   async loadUserData(): Promise<void> {
-    const auth = getAuth(firebaseApp);
-    const firestore = getFirestore(firebaseApp);
+    const auth = getAuth(firebaseAuthApp );
+    const firestore = getFirestore(firebaseAuthApp );
     const user = auth.currentUser;
 
     if (user) {
@@ -64,7 +64,7 @@ export class SelectorComponent implements OnInit, OnDestroy {
   }
 
   async loadCajas(): Promise<void> {
-    const auth = getAuth(firebaseApp);
+    const auth = getAuth(firebaseAuthApp );
     const user = auth.currentUser;
 
     if (!user) {
@@ -72,7 +72,7 @@ export class SelectorComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const firestore = getFirestore(firebaseApp);
+    const firestore = getFirestore(firebaseAuthApp );
     const cajasCollection = collection(firestore, 'cajas');
 
     // Filtrar cajas por el usuario actual

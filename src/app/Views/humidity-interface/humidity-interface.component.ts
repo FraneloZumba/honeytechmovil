@@ -1,51 +1,72 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js/auto';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { firebaseESPApp } from '../../firebase.config';
 
 @Component({
   selector: 'app-humidity-interface',
   templateUrl: './humidity-interface.component.html',
-  styleUrl: './humidity-interface.component.css'
+  styleUrls: ['./humidity-interface.component.css']
 })
-export class HumidityInterfaceComponent implements OnInit {
+export class HumidityInterfaceComponent implements AfterViewInit {
 
   public humed_ahora: Chart | null = null;
   public humed_semanal: Chart | null = null;
   public humed_mensual: Chart | null = null;
   public humed_anual: Chart | null = null;
+  public humedData: number = 0;  // Almacenar el valor de la humedad recibida de Firebase
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    this.initCharts();
+  ngAfterViewInit(): void {
+    this.fetchHumidityData();  // Llama a la función para cargar datos de Firebase
   }
 
-  private initCharts() {
-    // Datos para el gráfico de tiempo real
+  private fetchHumidityData() {
+    const db = getDatabase(firebaseESPApp);
+    const humidityRef = ref(db, 'tiempo_real');  // Ruta correcta hacia los datos de tiempo real
+
+    // Escucha los cambios en la base de datos
+    onValue(humidityRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();  // Obtener todos los datos bajo 'tiempo_real'
+        console.log('Datos de Firebase:', data);  // Verifica los datos
+
+        this.humedData = data.humidity;  // Actualiza la humedad con el valor recibido
+        this.updateCharts();  // Actualiza los gráficos con el nuevo valor de humedad
+      } else {
+        console.log('No se encontraron datos.');
+      }
+    });
+  }
+
+  private updateCharts() {
+    if (!document.getElementById('chart_ahora')) return;  // Verifica si el gráfico existe
+
     const dataAhora = {
       labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
       datasets: [{
         label: 'Humedad Real',
-        data: [80, 75, 70, 65, 75, 80, 70],
+        data: [this.humedData],  // Usamos el valor de la humedad
         fill: false,
         borderColor: 'rgb(255, 159, 64)',
         tension: 0.1
       }]
     };
-    
-    // Datos para el gráfico semanal
+
+    // Datos adicionales para los gráficos semanal, mensual y anual
     const dataSemanal = {
       labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
       datasets: [{
         label: 'Humedad Semanal',
-        data: [90, 75, 80, 65, 70, 55, 52],
+        data: [80, 75, 70, 65, 75, 80, 70],
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1
       }]
     };
 
-    // Datos para el gráfico mensual
     const dataMensual = {
       labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
       datasets: [{
@@ -57,7 +78,6 @@ export class HumidityInterfaceComponent implements OnInit {
       }]
     };
 
-    // Datos para el gráfico anual
     const dataAnual = {
       labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
       datasets: [{
@@ -69,26 +89,34 @@ export class HumidityInterfaceComponent implements OnInit {
       }]
     };
 
-    // Inicializar gráficos
-    this.humed_ahora = new Chart("chart_ahora", {
-      type: 'line',
-      data: dataAhora
-    });
+    // Inicializar gráficos si no existen
+    if (this.humed_ahora) {
+      this.humed_ahora.data = dataAhora;
+      this.humed_ahora.update();  // Actualiza el gráfico de tiempo real
+    } else {
+      this.humed_ahora = new Chart("chart_ahora", { type: 'line', data: dataAhora });
+    }
 
-    this.humed_semanal = new Chart("chart_semanal", {
-      type: 'line',
-      data: dataSemanal
-    });
+    if (this.humed_semanal) {
+      this.humed_semanal.data = dataSemanal;
+      this.humed_semanal.update();  // Actualiza el gráfico semanal
+    } else {
+      this.humed_semanal = new Chart("chart_semanal", { type: 'line', data: dataSemanal });
+    }
 
-    this.humed_mensual = new Chart("chart_mensual", {
-      type: 'line',
-      data: dataMensual
-    });
+    if (this.humed_mensual) {
+      this.humed_mensual.data = dataMensual;
+      this.humed_mensual.update();  // Actualiza el gráfico mensual
+    } else {
+      this.humed_mensual = new Chart("chart_mensual", { type: 'line', data: dataMensual });
+    }
 
-    this.humed_anual = new Chart("chart_anual", {
-      type: 'line',
-      data: dataAnual
-    });
+    if (this.humed_anual) {
+      this.humed_anual.data = dataAnual;
+      this.humed_anual.update();  // Actualiza el gráfico anual
+    } else {
+      this.humed_anual = new Chart("chart_anual", { type: 'line', data: dataAnual });
+    }
   }
 
   goToBoxInfo(): void {
