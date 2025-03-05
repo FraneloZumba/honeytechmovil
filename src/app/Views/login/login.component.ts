@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getFirestore, setDoc, doc } from 'firebase/firestore';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { firebaseAuthApp } from '../../firebase.config';
-
 
 @Component({
   selector: 'app-login',
@@ -29,10 +28,29 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    const auth = getAuth(firebaseAuthApp ); // Usa la app inicializada
+    const auth = getAuth(firebaseAuthApp); // Usa la app inicializada
     signInWithEmailAndPassword(auth, this.email, this.password)
-      .then(() => {
-        this.router.navigate(['/selector']);
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        const firestore = getFirestore(firebaseAuthApp);
+        const userDoc = doc(firestore, 'users', user.uid);
+        const userDocSnapshot = await getDoc(userDoc);
+
+        if (userDocSnapshot.exists()) {
+          const userData = userDocSnapshot.data();
+          const userRole = userData['role']; 
+
+          if (userRole === 'admin') {
+            // Si el rol es 'admin', redirige al componente adminselector
+            this.router.navigate(['/AdminViews/adminselector']);
+          } else {
+            // Si no es admin, redirige al selector normal
+            this.router.navigate(['/selector']);
+          }
+        } else {
+          console.error('El usuario no tiene rol asignado');
+          this.errorMessage = 'Error al obtener el rol del usuario';
+        }
       })
       .catch((error) => {
         console.error('Error de autenticación:', error);
@@ -42,31 +60,5 @@ export class LoginComponent implements OnInit {
 
   goToRegister() {
     this.router.navigate(['/register']);
-  }
-
-  // Login con Google
-  async loginWithGoogle() {
-    const auth = getAuth(firebaseAuthApp );
-    const provider = new GoogleAuthProvider();
-
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      console.log('Usuario logueado con Google:', user);
-
-      const firestore = getFirestore(firebaseAuthApp );
-      const userDoc = doc(firestore, 'users', user.uid);
-      await setDoc(userDoc, {
-        uid: user.uid,
-        email: user.email,
-        nombre: user.displayName,
-        createdAt: new Date(),
-      });
-
-      this.router.navigate(['/selector']);
-    } catch (error: any) {
-      console.error('Error al loguearse con Google:', error);
-      this.errorMessage = 'Error de autenticación con Google';
-    }
   }
 }
