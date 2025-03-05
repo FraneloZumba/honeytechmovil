@@ -8,9 +8,6 @@
             <div class="user-header">
                 <i class="uil uil-setting" (click)="goToConfig()"></i>
             </div>
-            <div class="profile-pic-container">
-                <div class="profile-pic"></div>
-            </div>
             <div class="user-info" *ngIf="user; else loadingUser">
                 <h2>Usuario</h2>
                 <p>Nombre: {{ user.nombre }}</p>

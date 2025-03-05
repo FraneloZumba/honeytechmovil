@@ -12,17 +12,10 @@
         <!-- Bloque de perfil -->
         <div class="profile-section">
             <div class="profile-info">
-              <img [src]="user?.profileImageUrl || 'default-avatar.png'" class="profile-avatar" (click)="fileInput.click()">
               <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;">
               <div class="profile-details">
                 <div class="name-and-badge">
                   <h3>{{ user.nombre }}</h3>
-                  <button class="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 24">
-                      <path d="m18 0 8 12 10-8-4 20H4L0 4l10 8 8-12z"></path>
-                    </svg>
-                    Pro
-                  </button>
                 </div>
                 <p>{{ user.email }}</p>
               </div>
