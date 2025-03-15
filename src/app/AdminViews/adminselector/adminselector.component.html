@@ -23,11 +23,6 @@
         <main *ngIf="activeTab === 'usuarios'" class="main-content fade-slide">
             <h2>Usuarios</h2>
             <div class="card-container">
-                <!-- Tarjeta para añadir una nueva caja -->
-                <div class="card plus-card" (click)="addUsuario()">
-                    <span class="plus-sign">+</span>
-                    <p>Añadir Usuario</p>
-                </div>
                 <!-- Mostrar usuarios de Firebase -->
                 <div *ngIf="cajas.length > 0; else noData">
                     <div *ngFor="let caja of cajas" class="card image-card">
