@@ -55,4 +55,8 @@ export class AddBoxComponent {
       console.error('Error al guardar la caja:', error);
     }
   }
+  
+  goToSelector(): void {
+    this.router.navigate(['/selector']);
+  }
 }

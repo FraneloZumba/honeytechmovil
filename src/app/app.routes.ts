@@ -10,6 +10,7 @@ import { CamInterfaceComponent} from './Views/cam-interface/cam-interface.compon
 import { HumidityInterfaceComponent } from './Views/humidity-interface/humidity-interface.component';
 import { TempInterfaceComponent } from './Views/temp-interface/temp-interface.component';
 import { WeightInterfaceComponent } from './Views/weight-interface/weight-interface.component';
+import { NotificationsComponent } from './Views/notifications/notifications.component';
 import { AdminSelectorComponent } from './AdminViews/adminselector/adminselector.component';
 
 export const routes: Routes = [
@@ -25,5 +26,9 @@ export const routes: Routes = [
   { path: 'humidity-interface/:nombre', component: HumidityInterfaceComponent },
   { path: 'temp-interface/:nombre', component: TempInterfaceComponent },
   { path: 'weight-interface/:nombre', component: WeightInterfaceComponent },
+  {
+    path: 'notifications',
+    loadComponent: () => import('./Views/notifications/notifications.component').then(m => m.NotificationsComponent)
+  },
   { path: 'AdminViews/adminselector', component: AdminSelectorComponent },
 ];

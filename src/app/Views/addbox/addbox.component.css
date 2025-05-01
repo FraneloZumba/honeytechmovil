@@ -185,3 +185,17 @@ html, body {
         height: 100vh;
     }
 }
+
+.back_button {
+    background-color: transparent;
+    color: rgb(184, 184, 184);
+    height: 65px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.back_button p {
+    font-size: 45px;
+    padding-top: 7px;
+    color: #000000;
+}

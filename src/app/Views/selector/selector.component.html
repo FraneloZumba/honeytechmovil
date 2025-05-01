@@ -22,6 +22,11 @@
 
         <!-- Contenido de Cajas -->
         <main *ngIf="activeTab === 'cajas'" class="main-content fade-slide">
+            <div class="user-header2">
+                <i class="uil uil-bell" (click)="goToNotifications()"></i>
+                <span class="notification-count" *ngIf="notificacionesNoLeidas > 0">
+                    {{ notificacionesNoLeidas }}
+                  </span>            </div>
             <h2>Cajas</h2>
             <div class="card-container">
                 <!-- Tarjeta para añadir una nueva caja -->

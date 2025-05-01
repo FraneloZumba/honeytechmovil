@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { firebaseAuthApp } from '../../firebase.config';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,12 +14,9 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./adminselector.component.css']
 })
 export class AdminSelectorComponent implements OnInit {
-  activeTab: string = 'usuarios'; // Inicializa la pestaña activa en 'usuarios'
-  cajas: any[] = []; // Array de cajas (usuarios)
-  userMessage: string = ''; // Mensaje del usuario para el chatbot (si es necesario)
-  messages: any[] = []; // Mensajes para el chatbot (si es necesario)
-  user: any = null; // Información del usuario autenticado
-  chatScriptLoaded: boolean = false; // Estado de carga del script del chatbot
+  activeTab: string = 'usuarios';
+  cajas: any[] = [];
+  user: any = null;
 
   constructor(
     private router: Router,
@@ -28,27 +25,24 @@ export class AdminSelectorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadUserData(); // Carga la información del usuario al inicializar
-    this.loadCajas(); // Carga las cajas (usuarios)
+    this.loadUserData();
+    this.loadCajas();
   }
 
-  // Método para establecer la pestaña activa
   setActiveTab(tab: string): void {
     this.activeTab = tab;
   }
 
-  // Método para cargar los datos del usuario desde Firebase
   async loadUserData(): Promise<void> {
-    const auth = getAuth(firebaseAuthApp); // Obtén la autenticación de Firebase
-    const firestore = getFirestore(firebaseAuthApp); // Obtén la instancia de Firestore
-    const user = auth.currentUser; // Obtén el usuario actual autenticado
+    const auth = getAuth(firebaseAuthApp);
+    const firestore = getFirestore(firebaseAuthApp);
+    const user = auth.currentUser;
 
     if (user) {
-      const userDocRef = doc(firestore, 'users', user.uid); // Obtén el documento del usuario desde Firestore
-      const userDoc = await getDoc(userDocRef); // Obtén el documento de usuario
-
+      const userDocRef = doc(firestore, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
       if (userDoc.exists()) {
-        this.user = userDoc.data(); // Si el documento existe, asigna los datos del usuario
+        this.user = userDoc.data();
       } else {
         console.log('No se encontró el documento del usuario');
       }
@@ -57,36 +51,59 @@ export class AdminSelectorComponent implements OnInit {
     }
   }
 
-  // Método para cargar las cajas (usuarios) desde Firebase
   async loadCajas(): Promise<void> {
-    const auth = getAuth(firebaseAuthApp); // Obtén la autenticación de Firebase
-    const user = auth.currentUser; // Obtén el usuario actual autenticado
+    const auth = getAuth(firebaseAuthApp);
+    const firestore = getFirestore(firebaseAuthApp);
+    const user = auth.currentUser;
 
     if (!user) {
       console.log('Usuario no autenticado');
       return;
     }
 
-    const firestore = getFirestore(firebaseAuthApp); // Obtén la instancia de Firestore
-    const cajasCollection = collection(firestore, 'cajas'); // Obtén la colección de cajas
+    // Si el usuario está autenticado, se consulta para todas las cajas
+    const cajasSnapshot = await getDocs(collection(firestore, 'cajas'));
+    const cajas = cajasSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
 
-    // Filtrar cajas por el usuario actual
-    const q = query(cajasCollection, where('usuarioId', '==', user.uid));
-    const querySnapshot = await getDocs(q); // Realiza la consulta a Firestore
+    console.log('Cajas sin procesar:', cajas);
 
-    this.cajas = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); // Asigna las cajas a la variable
-  }
+    const cajasConUsuario = await Promise.all(
+      cajas.map(async (caja: any) => {
+        const usuarioId = caja['usuarioId'];
+        let propietario = {
+          nombre: 'Desconocido',
+          email: ''
+        };
 
-  // Método para añadir un usuario (si es necesario)
-  addUsuario(): void {
-    console.log('Añadir Usuario');
-    // Aquí puedes agregar la lógica para añadir un usuario
-  }
+        if (usuarioId) {
+          try {
+            const userRef = doc(firestore, 'users', usuarioId);
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) {
+              const userData = userSnap.data();
+              propietario = {
+                nombre: userData['nombre'] || 'Desconocido',
+                email: userData['email'] || ''
+              };
+            }
+          } catch (error) {
+            console.error('Error obteniendo usuario:', error);
+          }
+        }
 
-  // Método para eliminar un usuario (si es necesario)
-  deleteUsuario(): void {
-    console.log('Eliminar Usuario');
-    // Aquí puedes agregar la lógica para eliminar un usuario
+        return {
+          ...caja,
+          propietario
+        };
+      })
+    );
+
+    console.log('Cajas con propietario:', cajasConUsuario);
+
+    this.cajas = cajasConUsuario;
   }
 
   goToLogin(): void {

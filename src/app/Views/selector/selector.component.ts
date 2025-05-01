@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, getDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { firebaseAuthApp } from '../../firebase.config';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +20,7 @@ export class SelectorComponent implements OnInit, OnDestroy {
   messages: any[] = [];
   user: any = null;
   chatScriptLoaded: boolean = false;
+  notificacionesNoLeidas: number = 0;  // contador de notificaciones no leídas
 
   constructor(
     private router: Router,
@@ -30,6 +31,7 @@ export class SelectorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadUserData();
     this.loadCajas();
+    this.listenToNotifications();  // Escuchar notificaciones
   }
 
   ngOnDestroy(): void {
@@ -176,5 +178,25 @@ export class SelectorComponent implements OnInit, OnDestroy {
 
   goToBoxInfo(cajaNombre: string): void {
     this.router.navigate(['/box-info', cajaNombre]);
+  }
+
+  goToNotifications(): void {
+    this.router.navigate(['/notifications']);
+  }
+
+  // Nueva función para escuchar notificaciones
+  listenToNotifications(): void {
+    const auth = getAuth(firebaseAuthApp);
+    const user = auth.currentUser;
+
+    if (!user) return;
+
+    const firestore = getFirestore(firebaseAuthApp);
+    const notiRef = collection(firestore, 'notifications');
+    const q = query(notiRef, where('userId', '==', user.uid), where('read', '==', false));
+
+    onSnapshot(q, (snapshot) => {
+      this.notificacionesNoLeidas = snapshot.size;
+    });
   }
 }

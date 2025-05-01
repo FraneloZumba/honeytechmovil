@@ -17,6 +17,9 @@
                 <div class="container-btn">
                     <button class="button" type="submit">Añadir Caja</button>
                 </div>
+                <div class="back_button">
+                    <p><i class="uil uil-angle-left" (click)="goToSelector()"></i></p>
+                </div>
                 <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
             </form>
         </div>

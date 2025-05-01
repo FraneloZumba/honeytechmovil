@@ -1,54 +1,54 @@
 <head>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-</head>
-
-<div class="mobile-screen">
+  </head>
+  
+  <div class="mobile-screen">
     <div class="content">
-        <!-- Contenido de Admin -->
-        <main *ngIf="activeTab === 'admin'" class="main-content fade-slide">
-            <div class="user-header">
-                <i class="uil uil-previous"(click)="goToLogin()"></i>
+      <!-- Admin Info -->
+      <main *ngIf="activeTab === 'admin'" class="main-content fade-slide">
+        <div class="user-header">
+          <i class="uil uil-previous" (click)="goToLogin()"></i>
+        </div>
+        <div class="user-info" *ngIf="user; else loadingUser">
+          <h2>Admin</h2>
+          <p>Nombre: {{ user.nombre }}</p>
+          <p>Correo: {{ user.email }}</p>
+        </div>
+        <ng-template #loadingUser>
+          <p>Cargando datos del admin...</p>
+        </ng-template>
+      </main>
+  
+      <!-- Cajas de todos los usuarios -->
+      <main *ngIf="activeTab === 'usuarios'" class="main-content fade-slide">
+        <h2>Cajas registradas</h2>
+        <div class="card-container">
+          <div *ngIf="cajas.length > 0; else noData">
+            <div *ngFor="let caja of cajas" class="card image-card">
+              <div class="image-placeholder">
+                <img src="https://cdn-icons-png.flaticon.com/512/5532/5532157.png" alt="Caja">
+              </div>
+              <p><strong>{{ caja.nombre }}</strong></p>
+              <p class="subtext">Propietario: {{ caja.propietario.nombre }}</p>
+              <p class="subtext">Correo: {{ caja.propietario.email }}</p>
             </div>
-            <div class="user-info" *ngIf="user; else loadingUser">
-                <h2>Admin</h2>
-                <p>Nombre: {{ user.nombre }}</p>
-                <p>Correo: {{ user.email }}</p>
-            </div>
-            <ng-template #loadingUser>
-                <p>Cargando datos del admin...</p>
-            </ng-template>
-        </main>
-
-        <!-- Contenido de Usuarios -->
-        <main *ngIf="activeTab === 'usuarios'" class="main-content fade-slide">
-            <h2>Usuarios</h2>
-            <div class="card-container">
-                <!-- Mostrar usuarios de Firebase -->
-                <div *ngIf="cajas.length > 0; else noData">
-                    <div *ngFor="let caja of cajas" class="card image-card">
-                        <div class="image-placeholder">
-                            <img src="https://cdn-icons-png.flaticon.com/512/5532/5532157.png" alt="Caja">
-                        </div>
-                        <p>{{ caja.nombre }}</p>
-                    </div>
-                </div>
-
-                <!-- Si no hay usuarios registrados -->
-                <ng-template #noData>
-                    <p>No hay usuarios registrados.</p>
-                </ng-template>
-            </div>
-        </main>
+          </div>
+          <ng-template #noData>
+            <p>No hay cajas registradas.</p>
+          </ng-template>
+        </div>
+      </main>
     </div>
-
+  
     <nav class="bottom-navbar">
-        <button class="nav-item" [class.active]="activeTab === 'admin'" (click)="setActiveTab('admin')">
-            <i class="uil uil-user-md"></i>
-            <span>Admin</span>
-        </button>
-        <button class="nav-item" [class.active]="activeTab === 'usuarios'" (click)="setActiveTab('usuarios')">
-            <i class="uil uil-users-alt"></i>
-            <span>Usuarios</span>
-        </button>
+      <button class="nav-item" [class.active]="activeTab === 'admin'" (click)="setActiveTab('admin')">
+        <i class="uil uil-user-md"></i>
+        <span>Admin</span>
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'usuarios'" (click)="setActiveTab('usuarios')">
+        <i class="uil uil-users-alt"></i>
+        <span>Usuarios</span>
+      </button>
     </nav>
-</div>
+  </div>
+  
