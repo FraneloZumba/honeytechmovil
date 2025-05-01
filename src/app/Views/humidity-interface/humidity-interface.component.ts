@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Chart } from 'chart.js/auto';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { firebaseESPApp } from '../../firebase.config';
+import { LocalNotificationService } from '../../services/local-notification.service'; // Asegúrate de importar el servicio
 
 @Component({
   selector: 'app-humidity-interface',
@@ -17,7 +18,10 @@ export class HumidityInterfaceComponent implements AfterViewInit {
   public humed_anual: Chart | null = null;
   public humedData: number = 0;  // Almacenar el valor de la humedad recibida de Firebase
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private localNotificationService: LocalNotificationService // Inyecta el servicio de notificaciones
+  ) {}
 
   ngAfterViewInit(): void {
     this.fetchHumidityData();  // Llama a la función para cargar datos de Firebase
@@ -33,8 +37,15 @@ export class HumidityInterfaceComponent implements AfterViewInit {
         const data = snapshot.val();  // Obtener todos los datos bajo 'tiempo_real'
         console.log('Datos de Firebase:', data);  // Verifica los datos
 
-        this.humedData = data.humidity;  // Actualiza la humedad con el valor recibido
-        this.updateCharts();  // Actualiza los gráficos con el nuevo valor de humedad
+        this.humedData = data.humidity;
+        this.updateCharts();
+        
+        // Notificaciones por humedad
+        if (this.humedData < 60) {
+          this.localNotificationService.scheduleNotification('Alerta de Humedad Baja', `Humedad actual: ${this.humedData}%`);
+        } else if (this.humedData > 95) {
+          this.localNotificationService.scheduleNotification('Alerta de Humedad Alta', `Humedad actual: ${this.humedData}%`);
+        }        
       } else {
         console.log('No se encontraron datos.');
       }

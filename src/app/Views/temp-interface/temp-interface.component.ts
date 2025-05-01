@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Chart } from 'chart.js/auto';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { firebaseESPApp } from '../../firebase.config';
+import { LocalNotificationService } from '../../services/local-notification.service'; // Asegúrate de importar el servicio
 
 @Component({
   selector: 'app-temp-interface',
@@ -14,7 +15,11 @@ export class TempInterfaceComponent implements AfterViewInit {
   public tempData: number = 0;  // Almacenamos la temperatura recibida de Firebase
   public cajaNombre: string = 'Desconocida';
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private localNotificationService: LocalNotificationService // Inyecta el servicio de notificaciones
+  ) {}
 
   ngAfterViewInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -34,8 +39,15 @@ export class TempInterfaceComponent implements AfterViewInit {
         const data = snapshot.val();  // Obtener todos los datos bajo 'tiempo_real'
         console.log('Datos de Firebase:', data);  // Verifica los datos
 
-        this.tempData = data.temperature;  // Actualiza la temperatura con el valor recibido
-        this.updateCharts();  // Actualiza los gráficos con el nuevo valor de temperatura
+        this.tempData = data.temperature;
+        this.updateCharts();
+        
+        // Notificaciones por temperatura
+        if (this.tempData > 35) {
+          this.localNotificationService.scheduleNotification('Alerta de Temperatura Alta', `Temperatura actual: ${this.tempData}°C`);
+        } else if (this.tempData < 25) {
+          this.localNotificationService.scheduleNotification('Alerta de Temperatura Baja', `Temperatura actual: ${this.tempData}°C`);
+        }
       } else {
         console.log('No se encontraron datos.');
       }
