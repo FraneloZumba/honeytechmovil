@@ -67,38 +67,42 @@ export class HumidityInterfaceComponent implements AfterViewInit {
     };
 
     // Datos adicionales para los gráficos semanal, mensual y anual
-    const dataSemanal = {
-      labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
-      datasets: [{
-        label: 'Humedad Semanal',
-        data: [80, 75, 70, 65, 75, 80, 70],
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
-    };
+   // Promedio diario de humedad durante la última semana (%)
+const dataSemanal = {
+  labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+  datasets: [{
+    label: 'Humedad Semanal (%)',
+    data: [65, 68, 70, 72, 71, 69, 67],
+    fill: false,
+    borderColor: 'rgb(75, 192, 192)',
+    tension: 0.1
+  }]
+};
 
-    const dataMensual = {
-      labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
-      datasets: [{
-        label: 'Humedad Mensual',
-        data: [60, 62, 65, 70],
-        fill: false,
-        borderColor: 'rgb(255, 99, 132)',
-        tension: 0.1
-      }]
-    };
+// Promedio semanal de humedad durante el último mes (%)
+const dataMensual = {
+  labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+  datasets: [{
+    label: 'Humedad Mensual (%)',
+    data: [66, 70, 73, 68],
+    fill: false,
+    borderColor: 'rgb(255, 99, 132)',
+    tension: 0.1
+  }]
+};
 
-    const dataAnual = {
-      labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-      datasets: [{
-        label: 'Humedad Anual',
-        data: [22, 25, 28, 30, 32, 35, 38, 37, 33, 28, 24, 20],
-        fill: false,
-        borderColor: 'rgb(54, 162, 235)',
-        tension: 0.1
-      }]
-    };
+// Promedio mensual de humedad durante el último año (%)
+const dataAnual = {
+  labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+  datasets: [{
+    label: 'Humedad Anual (%)',
+    data: [62, 64, 67, 70, 72, 74, 75, 73, 71, 68, 65, 63],
+    fill: false,
+    borderColor: 'rgb(54, 162, 235)',
+    tension: 0.1
+  }]
+};
+
 
     // Inicializar gráficos si no existen
     if (this.humed_ahora) {

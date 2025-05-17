@@ -12,6 +12,9 @@ import { LocalNotificationService } from '../../services/local-notification.serv
 })
 export class TempInterfaceComponent implements AfterViewInit {
   public temp_ahora: Chart | null = null;
+  public temp_semanal: Chart | null = null;
+  public temp_mensual: Chart | null = null;
+  public temp_anual: Chart | null = null;
   public tempData: number = 0;  // Almacenamos la temperatura recibida de Firebase
   public cajaNombre: string = 'Desconocida';
 
@@ -68,6 +71,44 @@ export class TempInterfaceComponent implements AfterViewInit {
       }]
     };
 
+    // Datos adicionales para los gráficos semanal, mensual y anual
+// Promedio diario durante la última semana (°C)
+const dataSemanal = {
+  labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+  datasets: [{
+    label: 'Temperatura Semanal (°C)',
+    data: [34.5, 34.8, 35.0, 35.2, 35.1, 34.9, 34.7],
+    fill: false,
+    borderColor: 'rgb(75, 192, 192)',
+    tension: 0.1
+  }]
+};
+
+// Promedio semanal durante el último mes (°C)
+const dataMensual = {
+  labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+  datasets: [{
+    label: 'Temperatura Mensual (°C)',
+    data: [34.6, 35.0, 35.2, 34.8],
+    fill: false,
+    borderColor: 'rgb(255, 99, 132)',
+    tension: 0.1
+  }]
+};
+
+// Promedio mensual durante el último año (°C)
+const dataAnual = {
+  labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+  datasets: [{
+    label: 'Temperatura Anual (°C)',
+    data: [32.5, 33.0, 33.8, 34.5, 35.0, 35.5, 36.0, 35.8, 35.2, 34.5, 33.5, 32.8],
+    fill: false,
+    borderColor: 'rgb(54, 162, 235)',
+    tension: 0.1
+  }]
+};
+
+
     // Si el gráfico ya ha sido creado, solo actualizamos los datos
     if (this.temp_ahora) {
       this.temp_ahora.data = dataAhora;
@@ -76,6 +117,28 @@ export class TempInterfaceComponent implements AfterViewInit {
       // Si el gráfico aún no ha sido creado, lo inicializamos
       this.temp_ahora = new Chart("chart_ahora", { type: 'line', data: dataAhora });
     }
+
+    if (this.temp_semanal) {
+      this.temp_semanal.data = dataSemanal;
+      this.temp_semanal.update();  // Actualiza el gráfico semanal
+    } else {
+      this.temp_semanal = new Chart("chart_semanal", { type: 'line', data: dataSemanal });
+    }
+
+    if (this.temp_mensual) {
+      this.temp_mensual.data = dataMensual;
+      this.temp_mensual.update();  // Actualiza el gráfico mensual
+    } else {
+      this.temp_mensual = new Chart("chart_mensual", { type: 'line', data: dataMensual });
+    }
+
+    if (this.temp_anual) {
+      this.temp_anual.data = dataAnual;
+      this.temp_anual.update();  // Actualiza el gráfico anual
+    } else {
+      this.temp_anual = new Chart("chart_anual", { type: 'line', data: dataAnual });
+    }
+
   }
 
   goToBoxInfo(): void {
