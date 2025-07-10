@@ -65,10 +65,18 @@ html, body {
 }
 
 .sections {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    gap: 20px;
+    padding: 0 10px;
     width: 100%;
+}
+
+/* En pantallas medianas o más anchas (≥480px), se muestran dos columnas */
+@media (min-width: 480px) {
+    .sections {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .section {
@@ -109,11 +117,6 @@ html, body {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
-.back_button {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-}
 
 .back_button i {
     font-size: 36px;
@@ -124,5 +127,33 @@ html, body {
 
 .back_button i:hover {
     color: #000000; /* Negro al hacer hover para resaltar el ícono */
+    transform: scale(1.1);
+}
+
+.header-hum-info {
+    display: flex;
+    align-items: center;
+    padding: 20px 10px 10px;
+    gap: 10px;
+}
+
+.hum-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+    flex: 1;
+    text-align: left;
+}
+
+.back_button {
+    font-size: 32px;
+    color: #333333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back_button:hover {
+    color: #000000;
     transform: scale(1.1);
 }

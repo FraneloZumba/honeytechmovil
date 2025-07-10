@@ -50,7 +50,7 @@ html, body {
 
 /* Header */
 .app-header {
-    background-image: url(https://png.pngtree.com/thumb_back/fw800/background/20240103/pngtree-honeycomb-texture-in-polygon-vector-form-image_13912633.png);
+    background-color: black;
     color: #ffd000;
     display: flex;
     align-items: center;

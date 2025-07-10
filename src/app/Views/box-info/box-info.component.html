@@ -4,7 +4,10 @@
 <div class="mobile-screen">
     <div class="content">
         <div class="info_containers">
-            <h2 class="box-name">Caja {{ cajaNombre }}</h2> <!-- Ahora muestra el nombre real de la caja -->
+            <div class="header-box-info">
+                <i class="uil uil-angle-left back_button" (click)="goToSelector()"></i>
+                <h2 class="box-name">Caja {{ cajaNombre }}</h2>
+              </div>              
             <div class="dashboard">
                 <div class="card" (click)="goToTemp()">
                     <h2>Temperatura</h2>
@@ -22,9 +25,6 @@
                     <h2>Cámaras</h2>
                     <i class="uil uil-camera"></i>
                 </div>
-            </div>
-            <div class="back_button">
-                <p><i class="uil uil-angle-left" (click)="goToSelector()"></i></p>
             </div>
         </div>
     </div>

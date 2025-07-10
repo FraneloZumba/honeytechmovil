@@ -65,11 +65,20 @@ html, body {
 }
 
 .sections {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+    display: grid;
+    grid-template-columns: 1fr; /* Por defecto: 1 columna */
+    gap: 20px;
+    padding: 0 10px;
     width: 100%;
 }
+
+/* Desde 480px (pantalla un poco más ancha) se muestra en 2 columnas */
+@media (min-width: 480px) {
+    .sections {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 
 .section {
     background: #FFFFFF; /* Fondo blanco para las secciones */
@@ -109,12 +118,6 @@ html, body {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
-.back_button {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-}
-
 .back_button i {
     font-size: 36px;
     color: #333333; /* Gris oscuro para el ícono de retroceso */
@@ -124,5 +127,33 @@ html, body {
 
 .back_button i:hover {
     color: #000000; /* Negro al hacer hover para resaltar el ícono */
+    transform: scale(1.1);
+}
+
+.header-temp-info {
+    display: flex;
+    align-items: center;
+    padding: 20px 10px 10px;
+    gap: 10px;
+}
+
+.temp-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+    flex: 1;
+    text-align: left;
+}
+
+.back_button {
+    font-size: 32px;
+    color: #333333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back_button:hover {
+    color: #000000;
     transform: scale(1.1);
 }

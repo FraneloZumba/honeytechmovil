@@ -22,13 +22,37 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.isLoaded = true;
-    }, 2000);
+    const auth = getAuth(firebaseAuthApp);
+    const user = auth.currentUser;
+
+    if (user) {
+      const firestore = getFirestore(firebaseAuthApp);
+      const userDoc = doc(firestore, 'users', user.uid);
+      getDoc(userDoc).then((snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.data();
+          const role = userData['role'];
+          if (role === 'admin') {
+            this.router.navigate(['/AdminViews/adminselector']);
+          } else {
+            this.router.navigate(['/selector']);
+          }
+        } else {
+          this.errorMessage = 'No se encontró el rol del usuario.';
+        }
+      }).catch((error) => {
+        console.error('Error al obtener el rol:', error);
+        this.errorMessage = 'Error al obtener los datos del usuario';
+      });
+    } else {
+      setTimeout(() => {
+        this.isLoaded = true;
+      }, 2000);
+    }
   }
 
   login() {
-    const auth = getAuth(firebaseAuthApp); // Usa la app inicializada
+    const auth = getAuth(firebaseAuthApp);
     signInWithEmailAndPassword(auth, this.email, this.password)
       .then(async (userCredential) => {
         const user = userCredential.user;
@@ -41,10 +65,8 @@ export class LoginComponent implements OnInit {
           const userRole = userData['role']; 
 
           if (userRole === 'admin') {
-            // Si el rol es 'admin', redirige al componente adminselector
             this.router.navigate(['/AdminViews/adminselector']);
           } else {
-            // Si no es admin, redirige al selector normal
             this.router.navigate(['/selector']);
           }
         } else {

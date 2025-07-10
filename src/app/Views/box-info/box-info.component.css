@@ -124,24 +124,76 @@ h2 {
 .back_button {
     background-color: transparent;
     color: rgb(184, 184, 184);
-    margin-right: 275px;
-    height: 65px;
     border-radius: 15px;
+    font-size: 45px;
     cursor: pointer;
 }
 
 .back_button p {
-    font-size: 45px;
+
     padding-top: 7px;
     color: #ffffff;
 }
 
-.card{
-    background: rgb(255,192,98);
-background: linear-gradient(135deg, rgba(255,192,98,1) 0%, rgba(255,171,67,1) 35%, rgba(252,205,26,1) 100%);
+.card {
+    width: 100%;
+    max-width: 160px;
+    height: 140px;
+    padding: 15px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(255,192,98,1) 0%, rgba(255,171,67,1) 35%, rgba(252,205,26,1) 100%);
     border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
 }
 
-.card i{
-    font-size: 45px;
+.card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #000;
 }
+
+.card i {
+    font-size: 40px;
+    color: #000;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.header-box-info {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre flecha y texto */
+    padding: 0 10px;
+    margin-bottom: 20px;
+}
+
+.box-name {
+    font-size: 24px;
+    margin: 0;
+    flex: 1;
+    text-align: center; 
+}
+
+.back_button {
+    font-size: 30px;
+    color: black;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.back_button:hover {
+    color: #ff9900; /* Cambia el color al pasar el mouse */
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales */
+    gap: 20px; /* Espacio entre tarjetas */
+    padding: 0 10px;
+    justify-items: center;
+    align-items: stretch;
+}
+
