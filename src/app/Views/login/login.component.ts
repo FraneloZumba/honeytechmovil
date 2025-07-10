@@ -23,32 +23,34 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     const auth = getAuth(firebaseAuthApp);
-    const user = auth.currentUser;
 
-    if (user) {
-      const firestore = getFirestore(firebaseAuthApp);
-      const userDoc = doc(firestore, 'users', user.uid);
-      getDoc(userDoc).then((snapshot) => {
-        if (snapshot.exists()) {
-          const userData = snapshot.data();
-          const role = userData['role'];
-          if (role === 'admin') {
-            this.router.navigate(['/AdminViews/adminselector']);
+    // Escuchar cambio de estado para mantener sesión activa
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        const firestore = getFirestore(firebaseAuthApp);
+        const userDoc = doc(firestore, 'users', user.uid);
+        getDoc(userDoc).then((snapshot) => {
+          if (snapshot.exists()) {
+            const userData = snapshot.data();
+            const role = userData['role'];
+            if (role === 'admin') {
+              this.router.navigate(['/AdminViews/adminselector']);
+            } else {
+              this.router.navigate(['/selector']);
+            }
           } else {
-            this.router.navigate(['/selector']);
+            this.errorMessage = 'No se encontró el rol del usuario.';
           }
-        } else {
-          this.errorMessage = 'No se encontró el rol del usuario.';
-        }
-      }).catch((error) => {
-        console.error('Error al obtener el rol:', error);
-        this.errorMessage = 'Error al obtener los datos del usuario';
-      });
-    } else {
-      setTimeout(() => {
-        this.isLoaded = true;
-      }, 2000);
-    }
+        }).catch((error) => {
+          console.error('Error al obtener el rol:', error);
+          this.errorMessage = 'Error al obtener los datos del usuario';
+        });
+      } else {
+        setTimeout(() => {
+          this.isLoaded = true;
+        }, 1500);
+      }
+    });
   }
 
   login() {
@@ -62,7 +64,7 @@ export class LoginComponent implements OnInit {
 
         if (userDocSnapshot.exists()) {
           const userData = userDocSnapshot.data();
-          const userRole = userData['role']; 
+          const userRole = userData['role'];
 
           if (userRole === 'admin') {
             this.router.navigate(['/AdminViews/adminselector']);

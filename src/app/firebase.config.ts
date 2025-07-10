@@ -1,5 +1,6 @@
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getDatabase } from "firebase/database";
+import { initializeAuth, indexedDBLocalPersistence } from "firebase/auth";
 
 // 🔥 Configuración Firebase para autenticación
 const firebaseAuthConfig = {
@@ -24,15 +25,21 @@ const firebaseESPConfig = {
   measurementId: "G-0QZLQ21790"
 };
 
-// 🔑 Inicializar Firebase Authentication
-export const firebaseAuthApp = getApps().some(app => app.name === "authApp") 
-  ? getApp("authApp") 
+// 🔑 Inicializar Firebase Authentication con persistencia
+const authApp = getApps().some(app => app.name === "authApp")
+  ? getApp("authApp")
   : initializeApp(firebaseAuthConfig, "authApp");
+
+// Inicializa auth con persistencia en dispositivos móviles
+initializeAuth(authApp, {
+  persistence: indexedDBLocalPersistence,
+});
+
+export const firebaseAuthApp = authApp;
 
 // 📡 Inicializar Firebase Sensores
 export const firebaseESPApp = getApps().some(app => app.name === "espApp") 
   ? getApp("espApp") 
   : initializeApp(firebaseESPConfig, "espApp");
 
-// 🔥 Exportar la base de datos de sensores
 export const firebaseESPDatabase = getDatabase(firebaseESPApp);
